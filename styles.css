@@ -1,0 +1,112 @@
+/* 1. Global Reset & Variables */
+:root {
+    --bg-color: #ffffff;
+    --border-color: #efefef;
+    --text-main: #1a1a1a;
+    --text-muted: #666;
+    --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+body {
+    background-color: var(--bg-color);
+    margin: 0;
+    padding: 2rem 10%; /* The "Big Margin" from the photo */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: var(--text-main);
+    line-height: 1.6;
+}
+
+/* 2. Header Layout */
+.header-layout {
+    display: flex;
+    gap: 2rem;
+    align-items: flex-start;
+    padding-bottom: 3rem;
+}
+
+.profile-img {
+    width: 150px;
+    height: 150px;
+    border-radius: 12px;
+    object-fit: cover;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 1.5rem;
+}
+
+/* 3. Buttons (Full Horizontal Space) */
+.btn, .social-btn, .project-card {
+    display: block;
+    width: 100%; /* Takes all horizontal space inside its section */
+    box-sizing: border-box; 
+    padding: 12px 20px;
+    border: 1px solid var(--border-color);
+    background: white;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: var(--text-main);
+    box-shadow: var(--shadow-subtle);
+    transition: 0.2s ease;
+}
+
+.btn.primary { background: #000; color: #fff; }
+.social-btn:hover, .project-card:hover { background: #f9f9f9; }
+
+/* 4. The 4-Column Grid System */
+.content-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* Creates 4 equal slots */
+    gap: 1.5rem;
+}
+
+/* 5. Section/Card Styling */
+section {
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow-subtle);
+    background: transparent;
+}
+
+/* 6. Grid Spanning Logic */
+.span-1 { grid-column: span 1; } /* Skinny (25%) */
+.span-2 { grid-column: span 2; } /* Equal (50%) */
+.span-3 { grid-column: span 3; } /* Bigger (75%) */
+
+/* 7. Timeline Styling */
+.timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-left: 2px solid var(--border-color);
+}
+
+.timeline li {
+    padding-left: 20px;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+.timeline-dot {
+    position: absolute;
+    left: -7px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    background: #000;
+    border-radius: 50%;
+}
+
+/* 8. Mobile Responsiveness */
+@media (max-width: 900px) {
+    .content-grid { grid-template-columns: 1fr; }
+    .span-1, .span-2, .span-3 { grid-column: span 1; }
+    .header-layout { flex-direction: column; align-items: center; text-align: center; }
+    body { padding: 1rem 5%; }
+}

@@ -10,16 +10,26 @@
         <header>
             <div class="header-layout">
                 <img src="profile.jpg" alt="Profile Image" class="profile-img">
-                <div class="profile-info">
-                    <h1>Kiel Andrew Esta</h1>
-                    <p class="address">Tanza, Cavite</p>
-                    <p class="subtitle">UI/UX Designer and Frontend Developer</p>
+                <div class="profile-center">
+                    <div class="name-row">
+                        <h1>Kiel Andrew Esta</h1>
+                        <span class="verified-badge">✔</span>
+                    </div>
+                    <p class="address">📍 Tanza, Cavite</p>
+                    <p class="subtitle">UI/UX Designer \ Frontend Developer</p>
+                    
+                    <div class="header-buttons">
+                        <button class="btn primary">Schedule a Call</button>
+                        <button class="btn secondary">Send Email</button>
+                    </div>
                 </div>
-                <button class="send-email-btn">Send Emails</button>
+                <div class="header-right">
+                    <div class="award-badge">TUP Manila Student 2026</div>
+                </div>
             </div>
         </header>
-        <main>
-            <section id="about">
+        <main class="content-grid">
+            <section id="about" class="span-3">
                 <h2>About</h2>
                 <h3>Designer & Developer</h3>
                 <p>I build digital products that are simple to use and beautiful to look at.</p>
@@ -39,7 +49,7 @@
                     <li><strong>Modern Style:</strong> I prefer a clean, modern aesthetic that lets the content speak for itself.</li>
                 </ul>
             </section>
-            <section id="experience">
+            <section id="experience" class="span-1">
                 <h2>Experience</h2>
                 <ul class="timeline">
                     <li>
@@ -64,7 +74,23 @@
                     </li>
                 </ul>
             </section>
-            <section id="tech-stack">
+            <section id="projects" class="span-2">
+                <h2>Projects</h2>
+                <div class="projects-grid">
+                    <a href="https://github.com/Ishkihu/Pawpedia.git" class="project-card" target="_blank">
+                        <div class="project-title">PawPedia Website</div>
+                        <div class="project-subtitle">Interactive Pet Encyclopedia</div>
+                    </a>
+                    <a href="https://github.com/Kiel-Andrew/COS-Student-Record-Program.git" class="project-card" target="_blank">
+                        <div class="project-title">COS Student Record Program</div>
+                        <div class="project-subtitle">Monitor students information within the College of Science</div>
+                    </a>
+                </div>
+            </section>
+            <section id="certifications" class="span-2">
+                <h2>Certifications</h2>
+            </section>
+            <section id="tech-stack" class="span-3">
                 <h2>Tech Stack</h2>
                 <div class="tech-categories">
                     <div class="tech-category">
@@ -106,23 +132,7 @@
                     </div>
                 </div>
             </section>
-            <section id="projects">
-                <h2>Projects</h2>
-                <div class="projects-grid">
-                    <a href="https://github.com/Ishkihu/Pawpedia.git" class="project-card" target="_blank">
-                        <div class="project-title">PawPedia Website</div>
-                        <div class="project-subtitle">Interactive Pet Encyclopedia</div>
-                    </a>
-                    <a href="https://github.com/Kiel-Andrew/COS-Student-Record-Program.git" class="project-card" target="_blank">
-                        <div class="project-title">COS Student Record Program</div>
-                        <div class="project-subtitle">Monitor students information within the College of Science</div>
-                    </a>
-                </div>
-            </section>
-            <section id="certifications">
-                <h2>Certifications</h2>
-            </section>
-            <section id="social-links">
+            <section id="social-links" class="span-1">
                 <h2>Social Links</h2>
                 <div class="social-buttons">
                     <a href="https://linkedin.com/in/yourprofile" class="social-btn linkedin" target="_blank">LinkedIn</a>
