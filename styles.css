@@ -1,4 +1,3 @@
-/* 1. Global Reset & Variables */
 :root {
     --bg-color: #ffffff;
     --border-color: #efefef;
@@ -6,10 +5,10 @@
     --text-muted: #666;
     --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.03);
     
-    /* Typography Scaling */
-    --font-h2: 1.5rem;    /* Bigger main section titles */
-    --font-h3: 1.1rem;    /* Subheaders inside sections */
-    --font-body: 0.9rem;  /* Compact body text */
+    /* Typography Scaling - Minimized for compactness */
+    --font-h2: 1.3rem;    
+    --font-h3: 1rem;    
+    --font-body: 0.85rem;  
 }
 
 * {
@@ -19,62 +18,74 @@
 body {
     background-color: var(--bg-color);
     margin: 0;
-    padding: 2rem 15%; /* Large side margins for breathability */
+    padding: 1rem 15%; /* Reduced top/bottom padding for immediate content focus */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: var(--text-main);
-    line-height: 1.6;
+    line-height: 1.4;
 }
 
 /* 2. Header Layout */
 header {
-    margin-bottom: 2rem;
+    margin-bottom: 0.5rem; /* Removed spacing to pull content up */
 }
 
 .header-layout {
     display: flex;
-    gap: 2rem;
-    align-items: flex-start;
-    padding-bottom: 2rem;
+    gap: 1.2rem;       /* Tighter gap to link image and text visually */
+    align-items: center; /* Vertically centers Image, Info, and Buttons */
+    padding: 0.5rem 0; /* Minimal vertical padding */
 }
 
 .profile-img {
-    width: 150px;
-    height: 150px;
+    width: 100px;      /* Slightly smaller image to highlight the name/title area */
+    height: 100px;
     border-radius: 12px;
     object-fit: cover;
 }
 
-.profile-info h1 {
+.profile-center {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.profile-center h1 {
     margin: 0;
-    font-size: 2rem;
+    font-size: 1.5rem; /* Minimized name size to maintain dashboard aesthetic */
+    font-weight: 700;
+    letter-spacing: -0.02em;
 }
 
 .address {
     color: var(--text-muted);
-    font-size: 0.9rem;
-    margin: 0.2rem 0;
+    font-size: 0.75rem; /* Scaled down address */
+    margin: 0;
 }
 
 .subtitle {
-    font-weight: 500;
-    margin-top: 0.5rem;
+    font-weight: 600; /* Highlighted weight */
+    margin-top: 0.1rem;
+    font-size: 0.85rem;
+    color: var(--text-main); /* High contrast to stand out */
 }
 
 .header-buttons {
     display: flex;
-    gap: 10px;
-    margin-top: 1.5rem;
+    gap: 6px;
+    align-items: center; /* Keeps buttons in line with text middle */
 }
 
-/* 3. Buttons & UI Elements (Full Horizontal Space) */
-.btn, .send-email-btn, .social-btn, .project-card {
+/* 3. Buttons & UI Elements */
+.btn, .social-btn, .project-card {
     display: block;
-    width: 100%; 
-    padding: 12px;
+    width: auto; 
+    min-width: 90px; 
+    padding: 6px 14px; /* Tightened button spacing */
     border: 1px solid var(--border-color);
     background: white;
-    border-radius: 8px;
-    font-size: 0.85rem;
+    border-radius: 6px;
+    font-size: 0.75rem; 
     font-weight: 500;
     text-align: center;
     text-decoration: none;
@@ -83,7 +94,7 @@ header {
     transition: 0.2s ease;
 }
 
-.btn.primary, .send-email-btn { 
+.btn.primary { 
     background: #000; 
     color: #fff; 
     border-color: #000; 
@@ -91,83 +102,91 @@ header {
 
 .social-btn:hover, .project-card:hover { 
     background: #f9f9f9; 
-    border-color: #333; 
 }
 
 /* 4. The 10-Column Grid System */
 .content-grid {
     display: grid;
     grid-template-columns: repeat(10, 1fr); 
-    gap: 1.5rem;
+    gap: 0.8rem; /* Tighter section gaps */
 }
 
 /* 5. Section/Card Styling */
 section {
     border: 1px solid var(--border-color);
-    padding: 1.5rem;
-    border-radius: 12px;
+    padding: 0.8rem 1rem; /* Compact card padding */
+    border-radius: 10px;
     box-shadow: var(--shadow-subtle);
-    background: transparent;
 }
 
-/* Header Hierarchy and Alignment */
 .section-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+/* View All Button - Minimized and clean */
+.view-all {
+    font-size: 0.65rem; /* Ultra-minimized */
+    color: var(--text-muted);
+    text-decoration: none;
+    font-weight: 400;
+    transition: opacity 0.2s;
+}
+
+.view-all:hover {
+    opacity: 0.7;
+    text-decoration: none;
 }
 
 section h2 {
     font-size: var(--font-h2);
-    margin-top: 0;
-    margin-bottom: 1.2rem;
+    margin: 0;
     font-weight: 700;
 }
 
-/* Use margin-bottom 0 for h2 if wrapped in a section-header */
-.section-header h2 { margin-bottom: 0; }
-
 section h3 {
     font-size: var(--font-h3);
-    margin-top: 1.2rem;
-    margin-bottom: 0.75rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.3rem;
     font-weight: 600;
 }
 
 section p, section li {
     font-size: var(--font-body);
     color: var(--text-muted);
+    margin-bottom: 0.4rem;
 }
 
 /* 6. Spanning Logic */
-.span-1 { grid-column: span 3; }    /* 30% Width (Experience) */
-.span-2 { grid-column: span 5; }    /* 50% Width (Projects/Certs) */
-.span-3 { grid-column: span 7; }    /* 70% Width (About) */
-.span-full { grid-column: span 10; } /* 100% Width (Tech Stack/Connect) */
+.span-1 { grid-column: span 3; } 
+.span-2 { grid-column: span 5; } 
+.span-3 { grid-column: span 7; } 
+.span-full { grid-column: span 10; } 
 
-/* 7. Tech Stack Horizontal Badge Styling */
+/* 7. Tech Stack Badge Styling */
 .tech-grid-horizontal {
     display: flex;
-    gap: 3rem;
+    gap: 2rem;
     flex-wrap: wrap;
 }
 
 .badge-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px;
+    gap: 6px;
 }
 
 .tech-badge {
-    padding: 6px 14px;
+    padding: 4px 10px;
     border: 1px solid #e5e7eb;
-    border-radius: 9999px;
-    font-size: 0.85rem;
+    border-radius: 6px;
+    font-size: 0.75rem;
     color: #374151;
 }
 
-/* 8. Experience List Styling (No Timeline Line) */
+/* 8. Experience List (Timeline Line Removed) */
 .timeline {
     list-style: none;
     padding: 0;
@@ -175,34 +194,34 @@ section p, section li {
 }
 
 .timeline li {
-    padding: 1rem 0;
+    padding: 0.6rem 0;
     border-bottom: 1px solid var(--border-color);
 }
 
 .timeline li:last-child { border-bottom: none; padding-bottom: 0; }
 .timeline li:first-child { padding-top: 0; }
 
-.exp-info strong { display: block; font-size: 1rem; color: var(--text-main); }
-.exp-info span { font-size: 0.9rem; color: var(--text-muted); }
-.exp-info small { display: block; font-size: 0.8rem; margin-top: 4px; }
+.exp-info strong { display: block; font-size: 0.95rem; line-height: 1.2; }
+.exp-info span { font-size: 0.85rem; }
+.exp-info small { display: block; font-size: 0.75rem; margin-top: 2px; }
 
-/* 9. Connect & Socials (Full Width Layout) */
+/* 9. Connect & Socials Layout */
 .connect-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+    gap: 2rem;
 }
 
 .social-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 8px;
 }
 
 /* 10. Footer */
 footer {
     text-align: center;
-    padding: 3rem 0;
-    font-size: 0.85rem;
+    padding: 1.5rem 0;
+    font-size: 0.8rem;
     color: var(--text-muted);
 }
