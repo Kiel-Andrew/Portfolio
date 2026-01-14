@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Kiel Andrew's Portfolio</title>
         <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="media.css">
     </head>
     <body>
         <header>
@@ -14,11 +15,11 @@
                     <div class="name-row">
                         <h1>Kiel Andrew Esta</h1>
                     </div>
-                    <p class="address">📍 Tanza, Cavite</p>
+                    <p class="address">Tanza, Cavite</p>
                     <p class="subtitle">UI/UX Designer \ Frontend Developer</p>
                     
                     <div class="header-buttons">
-                        <button class="btn primary">Schedule a Call</button>
+                        <button class="btn primary">Chat with Me</button>
                         <button class="btn secondary">Send Email</button>
                     </div>
                 </div>
@@ -44,6 +45,7 @@
                     <li><strong>Inclusivity:</strong> I build with accessibility as a priority. This means making sure everyone, including people with disabilities, can use what I create.</li>
                     <li><strong>Modern Style:</strong> I prefer a clean, modern aesthetic that lets the content speak for itself.</li>
                 </ul>
+                <button class="btn primary">Learn More</button>
             </section>
             <section id="experience" class="span-1">
                 <h2>Experience</h2>
@@ -86,54 +88,68 @@
             <section id="certifications" class="span-2">
                 <h2>Certifications</h2>
             </section>
-            <section id="tech-stack" class="span-3">
-                <h2>Tech Stack</h2>
-                <div class="tech-categories">
-                    <div class="tech-category">
-                        <h3>Development</h3>
-                        <ul>
-                            <li>React</li>
-                            <li>TypeScript</li>
-                            <li>JavaScript</li>
-                            <li>Java</li>
-                            <li>HTML</li>
-                            <li>CSS</li>
-                            <li>Tailwind</li>
-                        </ul>
+            <section id="tech-stack" class="span-full">
+                <div class="section-header">
+                    <h2>Tech Stack</h2>
+                    <a href="#" class="view-all">View All ></a>
+                </div>
+
+                <div class="tech-category">
+                    <h3>Development</h3>
+                    <div class="badge-container">
+                        <span class="tech-badge">React</span>
+                        <span class="tech-badge">TypeScript</span>
+                        <span class="tech-badge">JavaScript</span>
+                        <span class="tech-badge">Java</span>
+                        <span class="tech-badge">HTML</span>
+                        <span class="tech-badge">CSS</span>
+                        <span class="tech-badge">Tailwind</span>
                     </div>
-                    <div class="tech-category">
-                        <h3>Database</h3>
-                        <ul>
-                            <li>MySQL</li>
-                            <li>Supabase</li>
-                        </ul>
+                </div>
+
+                <div class="tech-category">
+                    <h3>Database</h3>
+                    <div class="badge-container">
+                        <span class="tech-badge">MySQL</span>
+                        <span class="tech-badge">Supabase</span>
                     </div>
-                    <div class="tech-category">
-                        <h3>Design</h3>
-                        <ul>
-                            <li>Figma</li>
-                            <li>Wireframing</li>
-                            <li>Prototyping</li>
-                            <li>User Interface & User Experience</li>
-                        </ul>
+                </div>
+
+                <div class="tech-category">
+                    <h3>Design</h3>
+                    <div class="badge-container">
+                        <span class="tech-badge">Figma</span>
+                        <span class="tech-badge">Wireframing</span>
+                        <span class="tech-badge">Prototyping</span>
+                        <span class="tech-badge">UI & UX</span>
                     </div>
-                    <div class="tech-category">
-                        <h3>Tools</h3>
-                        <ul>
-                            <li>Git</li>
-                            <li>GitHub</li>
-                            <li>Visual Studio Code</li>
-                            <li>Apache NetBeans</li>
-                        </ul>
+                </div>
+
+                <div class="tech-category">
+                    <h3>Tools</h3>
+                    <div class="badge-container">
+                        <span class="tech-badge">Git</span>
+                        <span class="tech-badge">GitHub</span>
+                        <span class="tech-badge">Visual Studio Code</span>
+                        <span class="tech-badge">Apache NetBeans</span>
                     </div>
                 </div>
             </section>
-            <section id="social-links" class="span-1">
-                <h2>Social Links</h2>
-                <div class="social-buttons">
-                    <a href="https://linkedin.com/in/yourprofile" class="social-btn linkedin" target="_blank">LinkedIn</a>
-                    <a href="https://github.com/yourusername" class="social-btn github" target="_blank">GitHub</a>
-                    <a href="https://instagram.com/yourusername" class="social-btn instagram" target="_blank">Instagram</a>
+            <section id="connect" class="span-full">
+                <div class="connect-container">
+                    <div class="connect-column">
+                        <h2>Social Links</h2>
+                        <div class="social-grid">
+                            <a href="#" class="social-btn">LinkedIn</a>
+                            <a href="#" class="social-btn">GitHub</a>
+                            <a href="#" class="social-btn">Instagram</a>
+                        </div>
+                    </div>
+                    <div class="connect-column">
+                        <h2>Contact Me</h2>
+                        <p>Ready to start a project? Feel free to reach out.</p>
+                        <a href="mailto:yourname@email.com" class="btn primary">Send an Email</a>
+                    </div>
                 </div>
             </section>
         </main>

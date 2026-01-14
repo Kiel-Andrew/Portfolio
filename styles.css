@@ -5,23 +5,36 @@
     --text-main: #1a1a1a;
     --text-muted: #666;
     --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.03);
+    
+    /* Typography Scaling */
+    --font-h2: 1.5rem;    /* Bigger main section titles */
+    --font-h3: 1.1rem;    /* Subheaders inside sections */
+    --font-body: 0.9rem;  /* Compact body text */
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
     background-color: var(--bg-color);
     margin: 0;
-    padding: 2rem 10%; /* The "Big Margin" from the photo */
+    padding: 2rem 15%; /* Large side margins for breathability */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: var(--text-main);
     line-height: 1.6;
 }
 
 /* 2. Header Layout */
+header {
+    margin-bottom: 2rem;
+}
+
 .header-layout {
     display: flex;
     gap: 2rem;
     align-items: flex-start;
-    padding-bottom: 3rem;
+    padding-bottom: 2rem;
 }
 
 .profile-img {
@@ -31,37 +44,60 @@ body {
     object-fit: cover;
 }
 
+.profile-info h1 {
+    margin: 0;
+    font-size: 2rem;
+}
+
+.address {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    margin: 0.2rem 0;
+}
+
+.subtitle {
+    font-weight: 500;
+    margin-top: 0.5rem;
+}
+
 .header-buttons {
     display: flex;
     gap: 10px;
     margin-top: 1.5rem;
 }
 
-/* 3. Buttons (Full Horizontal Space) */
-.btn, .social-btn, .project-card {
+/* 3. Buttons & UI Elements (Full Horizontal Space) */
+.btn, .send-email-btn, .social-btn, .project-card {
     display: block;
-    width: 100%; /* Takes all horizontal space inside its section */
-    box-sizing: border-box; 
-    padding: 12px 20px;
+    width: 100%; 
+    padding: 12px;
     border: 1px solid var(--border-color);
     background: white;
     border-radius: 8px;
+    font-size: 0.85rem;
     font-weight: 500;
-    cursor: pointer;
     text-align: center;
     text-decoration: none;
     color: var(--text-main);
-    box-shadow: var(--shadow-subtle);
+    cursor: pointer;
     transition: 0.2s ease;
 }
 
-.btn.primary { background: #000; color: #fff; }
-.social-btn:hover, .project-card:hover { background: #f9f9f9; }
+.btn.primary, .send-email-btn { 
+    background: #000; 
+    color: #fff; 
+    border-color: #000; 
+}
 
-/* 4. The 4-Column Grid System */
+.social-btn:hover, .project-card:hover { 
+    background: #f9f9f9; 
+    border-color: #333; 
+}
+
+/* 4. The 10-Column Grid System */
 .content-grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Creates 4 equal slots */
+    grid-template-columns: repeat(10, 1fr); 
     gap: 1.5rem;
 }
 
@@ -74,39 +110,99 @@ section {
     background: transparent;
 }
 
-/* 6. Grid Spanning Logic */
-.span-1 { grid-column: span 1; } /* Skinny (25%) */
-.span-2 { grid-column: span 2; } /* Equal (50%) */
-.span-3 { grid-column: span 3; } /* Bigger (75%) */
+/* Header Hierarchy and Alignment */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.2rem;
+}
 
-/* 7. Timeline Styling */
+section h2 {
+    font-size: var(--font-h2);
+    margin-top: 0;
+    margin-bottom: 1.2rem;
+    font-weight: 700;
+}
+
+/* Use margin-bottom 0 for h2 if wrapped in a section-header */
+.section-header h2 { margin-bottom: 0; }
+
+section h3 {
+    font-size: var(--font-h3);
+    margin-top: 1.2rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+}
+
+section p, section li {
+    font-size: var(--font-body);
+    color: var(--text-muted);
+}
+
+/* 6. Spanning Logic */
+.span-1 { grid-column: span 3; }    /* 30% Width (Experience) */
+.span-2 { grid-column: span 5; }    /* 50% Width (Projects/Certs) */
+.span-3 { grid-column: span 7; }    /* 70% Width (About) */
+.span-full { grid-column: span 10; } /* 100% Width (Tech Stack/Connect) */
+
+/* 7. Tech Stack Horizontal Badge Styling */
+.tech-grid-horizontal {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+}
+
+.badge-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.tech-badge {
+    padding: 6px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    color: #374151;
+}
+
+/* 8. Experience List Styling (No Timeline Line) */
 .timeline {
     list-style: none;
     padding: 0;
     margin: 0;
-    border-left: 2px solid var(--border-color);
 }
 
 .timeline li {
-    padding-left: 20px;
-    margin-bottom: 1.5rem;
-    position: relative;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border-color);
 }
 
-.timeline-dot {
-    position: absolute;
-    left: -7px;
-    top: 5px;
-    width: 12px;
-    height: 12px;
-    background: #000;
-    border-radius: 50%;
+.timeline li:last-child { border-bottom: none; padding-bottom: 0; }
+.timeline li:first-child { padding-top: 0; }
+
+.exp-info strong { display: block; font-size: 1rem; color: var(--text-main); }
+.exp-info span { font-size: 0.9rem; color: var(--text-muted); }
+.exp-info small { display: block; font-size: 0.8rem; margin-top: 4px; }
+
+/* 9. Connect & Socials (Full Width Layout) */
+.connect-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
 }
 
-/* 8. Mobile Responsiveness */
-@media (max-width: 900px) {
-    .content-grid { grid-template-columns: 1fr; }
-    .span-1, .span-2, .span-3 { grid-column: span 1; }
-    .header-layout { flex-direction: column; align-items: center; text-align: center; }
-    body { padding: 1rem 5%; }
+.social-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+/* 10. Footer */
+footer {
+    text-align: center;
+    padding: 3rem 0;
+    font-size: 0.85rem;
+    color: var(--text-muted);
 }
