@@ -1,3 +1,4 @@
+/* 1. Global Reset & Variables */
 :root {
     --bg-color: #ffffff;
     --border-color: #efefef;
@@ -18,7 +19,7 @@
 body {
     background-color: var(--bg-color);
     margin: 0;
-    padding: 1rem 15%; /* Reduced top/bottom padding for immediate content focus */
+    padding: 1rem 15%; 
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: var(--text-main);
     line-height: 1.4;
@@ -26,18 +27,18 @@ body {
 
 /* 2. Header Layout */
 header {
-    margin-bottom: 0.5rem; /* Removed spacing to pull content up */
+    margin-bottom: 0.5rem;
 }
 
 .header-layout {
     display: flex;
-    gap: 1.2rem;       /* Tighter gap to link image and text visually */
-    align-items: center; /* Vertically centers Image, Info, and Buttons */
-    padding: 0.5rem 0; /* Minimal vertical padding */
+    gap: 1.2rem;
+    align-items: center; 
+    padding: 0.5rem 0;
 }
 
 .profile-img {
-    width: 100px;      /* Slightly smaller image to highlight the name/title area */
+    width: 100px;
     height: 100px;
     border-radius: 12px;
     object-fit: cover;
@@ -52,28 +53,39 @@ header {
 
 .profile-center h1 {
     margin: 0;
-    font-size: 1.5rem; /* Minimized name size to maintain dashboard aesthetic */
+    font-size: 1.5rem;
     font-weight: 700;
     letter-spacing: -0.02em;
 }
 
 .address {
     color: var(--text-muted);
-    font-size: 0.75rem; /* Scaled down address */
+    font-size: 0.75rem;
     margin: 0;
 }
 
+.title {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 2px;
+    color: #000;
+}
+
 .subtitle {
-    font-weight: 600; /* Highlighted weight */
-    margin-top: 0.1rem;
-    font-size: 0.85rem;
-    color: var(--text-main); /* High contrast to stand out */
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+}
+
+.year {
+    font-size: 0.7rem;
+    color: var(--text-muted);
 }
 
 .header-buttons {
     display: flex;
     gap: 6px;
-    align-items: center; /* Keeps buttons in line with text middle */
+    align-items: center;
 }
 
 /* 3. Buttons & UI Elements */
@@ -81,7 +93,7 @@ header {
     display: block;
     width: auto; 
     min-width: 90px; 
-    padding: 6px 14px; /* Tightened button spacing */
+    padding: 6px 14px;
     border: 1px solid var(--border-color);
     background: white;
     border-radius: 6px;
@@ -104,17 +116,34 @@ header {
     background: #f9f9f9; 
 }
 
+.project-card {
+    text-align: left;
+    padding: 12px 16px;
+}
+
+.project-title {
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+}
+
+.project-subtitle {
+    font-weight: 400;
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
 /* 4. The 10-Column Grid System */
 .content-grid {
     display: grid;
     grid-template-columns: repeat(10, 1fr); 
-    gap: 0.8rem; /* Tighter section gaps */
+    gap: 0.8rem;
 }
 
 /* 5. Section/Card Styling */
 section {
     border: 1px solid var(--border-color);
-    padding: 0.8rem 1rem; /* Compact card padding */
+    padding: 0.8rem 1rem;
     border-radius: 10px;
     box-shadow: var(--shadow-subtle);
 }
@@ -126,9 +155,8 @@ section {
     margin-bottom: 0.5rem;
 }
 
-/* View All Button - Minimized and clean */
 .view-all {
-    font-size: 0.65rem; /* Ultra-minimized */
+    font-size: 0.65rem;
     color: var(--text-muted);
     text-decoration: none;
     font-weight: 400;
@@ -144,6 +172,9 @@ section h2 {
     font-size: var(--font-h2);
     margin: 0;
     font-weight: 700;
+    display: flex;       
+    align-items: center; 
+    gap: 0.5rem;         
 }
 
 section h3 {
@@ -159,11 +190,22 @@ section p, section li {
     margin-bottom: 0.4rem;
 }
 
+h2 i {
+    font-size: 0.8em;
+    line-height: 0;
+}
+
 /* 6. Spanning Logic */
 .span-1 { grid-column: span 3; } 
 .span-2 { grid-column: span 5; } 
 .span-3 { grid-column: span 7; } 
 .span-full { grid-column: span 10; } 
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+}
 
 /* 7. Tech Stack Badge Styling */
 .tech-grid-horizontal {
@@ -186,7 +228,7 @@ section p, section li {
     color: #374151;
 }
 
-/* 8. Experience List (Timeline Line Removed) */
+/* 8. Experience List */
 .timeline {
     list-style: none;
     padding: 0;
@@ -216,6 +258,8 @@ section p, section li {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 8px;
+    align-items: center;
+    padding-top: 1rem;
 }
 
 /* 10. Footer */
