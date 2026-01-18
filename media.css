@@ -1,28 +1,6 @@
-@media (max-width: 768px) {
-    .content-grid { grid-template-columns: 1fr; }
-    .header-layout { flex-direction: column; text-align: center; }
-    body { 
-        padding: 1rem 5%; 
-        padding-left: max(5%, env(safe-area-inset-left));
-        padding-right: max(5%, env(safe-area-inset-right));
-        padding-top: max(1rem, env(safe-area-inset-top));
-        padding-bottom: max(1rem, env(safe-area-inset-bottom));
-    }
-}
+/* 12. Responsive Design & Mobile Adjustments */
 
-@media (max-width: 900px) {
-    .content-grid { grid-template-columns: 1fr; }
-    .span-1, .span-2, .span-3 { grid-column: span 1; }
-    .header-layout { flex-direction: column; align-items: center; text-align: center; }
-    body { 
-        padding: 1rem 5%; 
-        padding-left: max(5%, env(safe-area-inset-left));
-        padding-right: max(5%, env(safe-area-inset-right));
-        padding-top: max(1rem, env(safe-area-inset-top));
-        padding-bottom: max(1rem, env(safe-area-inset-bottom));
-    }
-}
-
+/* Tablet and Small Desktops */
 @media (max-width: 1024px) {
     body { 
         padding: 2rem 5%; 
@@ -33,17 +11,49 @@
     }
 }
 
+/* Medium Screens (Tablets) */
+@media (max-width: 900px) {
+    .content-grid { 
+        grid-template-columns: 1fr; 
+    }
+    .span-1, .span-2, .span-3, .span-full { 
+        grid-column: span 1; 
+    }
+    .header-layout { 
+        flex-direction: column; 
+        align-items: center; 
+        text-align: center; 
+    }
+}
+
+/* Small Screens (Mobile Phones) */
 @media (max-width: 768px) {
-    .content-grid { grid-template-columns: 1fr; }
-    .span-1, .span-2, .span-3, .span-full { grid-column: span 1; }
-    .header-layout { flex-direction: column; align-items: center; text-align: center; }
-    .connect-container { grid-template-columns: 1fr; }
-    .tech-grid-horizontal { flex-direction: column; gap: 1.5rem; }
     body { 
         padding: 1rem 5%; 
         padding-left: max(5%, env(safe-area-inset-left));
         padding-right: max(5%, env(safe-area-inset-right));
         padding-top: max(1rem, env(safe-area-inset-top));
         padding-bottom: max(1rem, env(safe-area-inset-bottom));
+    }
+
+    /* Stack grid sections and layouts */
+    .connect-container, .projects-grid { 
+        grid-template-columns: 1fr; 
+    }
+
+    .tech-grid-horizontal { 
+        flex-direction: column; 
+        gap: 1.5rem; 
+    }
+
+    /* Mobile Modal Optimizations */
+    dialog {
+        width: 95%;           /* Full width for mobile visibility */
+        padding: 1.5rem 1rem; /* Compact padding for small screens */
+    }
+
+    .modal-close {
+        top: 0.5rem;
+        right: 0.5rem;
     }
 }

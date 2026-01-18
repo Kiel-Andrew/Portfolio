@@ -1,33 +1,64 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Experience modal
-    const viewAllExperience = document.querySelector('#experience .view-all');
-    const modalExperience = document.getElementById('modal-experience');
-    viewAllExperience.addEventListener('click', (e) => {
-        e.preventDefault();
-        modalExperience.showModal();
-    });
+    const setupModal = (triggerSelector, modalId) => {
+        const trigger = document.querySelector(triggerSelector);
+        const modal = document.getElementById(modalId);
 
-    // Certifications modal
-    const viewAllCertifications = document.querySelector('#certifications .view-all');
-    const modalCertifications = document.getElementById('modal-certifications');
-    viewAllCertifications.addEventListener('click', (e) => {
-        e.preventDefault();
-        modalCertifications.showModal();
-    });
+        if (trigger && modal) {
+            trigger.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Record current scroll position
+                const scrollY = window.scrollY;
+                
+                modal.showModal();
+                
+                // LOCK SCROLL: Prevent background scrolling
+                document.body.style.overflow = 'hidden';
 
-    // Tech Stack modal
-    const viewAllTechStack = document.querySelector('#tech-stack .view-all');
-    const modalTechStack = document.getElementById('modal-tech-stack');
-    viewAllTechStack.addEventListener('click', (e) => {
-        e.preventDefault();
-        modalTechStack.showModal();
-    });
+                // Restore scroll if the browser tried to jump
+                window.scrollTo(0, scrollY);
+                
+                const closeBtn = modal.querySelector('button, .modal-close');
+                if (closeBtn) {
+                    closeBtn.focus({ preventScroll: true });
+                }
+            });
+        }
+    };
 
-    // Projects modal
-    const viewAllProjects = document.querySelector('#projects .view-all');
-    const modalProjects = document.getElementById('modal-projects');
-    viewAllProjects.addEventListener('click', (e) => {
-        e.preventDefault();
-        modalProjects.showModal();
+    // Re-initialize modals
+    setupModal('#experience .view-all', 'modal-experience');
+    setupModal('#certifications .view-all', 'modal-certifications');
+    setupModal('#tech-stack .view-all', 'modal-tech-stack');
+    setupModal('#projects .view-all', 'modal-projects');
+
+    const modals = document.querySelectorAll('dialog');
+    modals.forEach(modal => {
+        // UNLOCK SCROLL: When clicking the backdrop
+        modal.addEventListener('click', (e) => {
+            const dialogDimensions = modal.getBoundingClientRect();
+            if (
+                e.clientX < dialogDimensions.left ||
+                e.clientX > dialogDimensions.right ||
+                e.clientY < dialogDimensions.top ||
+                e.clientY > dialogDimensions.bottom
+            ) {
+                modal.close();
+                document.body.style.overflow = '';
+            }
+        });
+
+        // UNLOCK SCROLL: When clicking any close button inside the modal
+        const closeBtns = modal.querySelectorAll('.modal-close, [onclick*="close()"]');
+        closeBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.body.style.overflow = '';
+            });
+        });
+
+        // UNLOCK SCROLL: Handle the "Esc" key close event
+        modal.addEventListener('cancel', () => {
+            document.body.style.overflow = '';
+        });
     });
 });

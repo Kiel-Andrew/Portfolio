@@ -275,3 +275,41 @@ footer {
     font-size: 0.8rem;
     color: var(--text-muted);
 }
+
+/* 11. Modal Styling */
+dialog {
+    position: fixed;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    width: calc(100% - 30%);
+    max-width: 1200px;
+    margin: auto;
+}
+
+.modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--text-muted);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+
+.modal-close:hover {
+    color: var(--text-main);
+}
+
+/* Prevent the background from scrolling when any modal is open */
+body:has(dialog[open]) {
+    overflow: hidden;
+}

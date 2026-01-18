@@ -50,7 +50,7 @@
             <section id="experience" class="span-1">
                 <div class="section-header">
                     <h2><i class="fas fa-briefcase"></i> Experience</h2>
-                    <a href="#" class="view-all">View All ></a>
+                    <a href="javascript:void(0)" class="view-all">View All ></a>
                 </div>
                 <ul class="timeline">
                     <li>
@@ -78,13 +78,13 @@
             <section id="certifications" class="span-1">
                 <div class="section-header">
                     <h2><i class="fas fa-certificate"></i> Certifications</h2>
-                    <a href="#" class="view-all">View All ></a>
+                    <a href="javascript:void(0)" class="view-all">View All ></a>
                 </div>
             </section>
             <section id="tech-stack" class="span-3">
                 <div class="section-header">
                     <h2><i class="fas fa-code"></i> Tech Stack</h2>
-                    <a href="#" class="view-all">View All ></a>
+                    <a href="javascript:void(0)" class="view-all">View All ></a>
                 </div>
 
                 <div class="tech-category">
@@ -131,7 +131,7 @@
             <section id="projects" class="span-full">
                 <div class="section-header">
                     <h2><i class="fas fa-project-diagram"></i> Projects</h2>
-                    <a href="#" class="view-all">View All ></a>
+                    <a href="javascript:void(0)" class="view-all">View All ></a>
                 </div>
                 <div class="projects-grid">
                     <a href="https://github.com/Ishkihu/Pawpedia.git" class="project-card" target="_blank">
@@ -143,12 +143,12 @@
                         <div class="project-subtitle">Monitor students information within the College of Science</div>
                     </a>
                     <a href="#" class="project-card" target="_blank">
-                        <div class="project-title">eTire System</div>
-                        <div class="project-subtitle">UI/UX Design and Front-End Development</div>
+                        <div class="project-title">-</div>
+                        <div class="project-subtitle">-</div>
                     </a>
                     <a href="#" class="project-card" target="_blank">
-                        <div class="project-title">Portfolio Website</div>
-                        <div class="project-subtitle">Personal Portfolio Built with HTML, CSS, and JavaScript</div>
+                        <div class="project-title">-</div>
+                        <div class="project-subtitle">-</div>
                     </a>
                 </div>
             </section>
@@ -173,12 +173,15 @@
         <footer>
             <p>&copy; 2026 - Kiel Andrew Esta Portfolio. @All rights reserved.</p>
         </footer>
+
+
         <dialog id="view-all-modal">
+            <button class="modal-close" onclick="document.getElementById('view-all-modal').close()"><i class="fas fa-times"></i></button>
             <h2>All Items</h2>
             <div id="modal-content"><!-- Dynamic content --></div>
-            <button onclick="document.getElementById('view-all-modal').close()">Close</button>
         </dialog>
         <dialog id="modal-experience">
+            <button class="modal-close" onclick="document.getElementById('modal-experience').close()"><i class="fas fa-times"></i></button>
             <h2>All Experiences</h2>
             <div class="modal-content">
                 <ul class="timeline">
@@ -204,16 +207,16 @@
                     </li>
                 </ul>
             </div>
-            <button onclick="document.getElementById('modal-experience').close()">Close</button>
         </dialog>
         <dialog id="modal-certifications">
+            <button class="modal-close" onclick="document.getElementById('modal-certifications').close()"><i class="fas fa-times"></i></button>
             <h2>All Certifications</h2>
             <div class="modal-content">
                 <p>No certifications listed yet.</p>
             </div>
-            <button onclick="document.getElementById('modal-certifications').close()">Close</button>
         </dialog>
         <dialog id="modal-tech-stack">
+            <button class="modal-close" onclick="document.getElementById('modal-tech-stack').close()"><i class="fas fa-times"></i></button>
             <h2>All Tech Stack</h2>
             <div class="modal-content">
                 <div class="tech-category">
@@ -254,9 +257,9 @@
                     </div>
                 </div>
             </div>
-            <button onclick="document.getElementById('modal-tech-stack').close()">Close</button>
         </dialog>
         <dialog id="modal-projects">
+            <button class="modal-close" onclick="document.getElementById('modal-projects').close()"><i class="fas fa-times"></i></button>
             <h2>All Projects</h2>
             <div class="modal-content">
                 <div class="projects-grid">
@@ -269,16 +272,15 @@
                         <div class="project-subtitle">Monitor students information within the College of Science</div>
                     </a>
                     <a href="#" class="project-card" target="_blank">
-                        <div class="project-title">eTire System</div>
-                        <div class="project-subtitle">UI/UX Design and Front-End Development</div>
+                        <div class="project-title">-</div>
+                        <div class="project-subtitle">-</div>
                     </a>
                     <a href="#" class="project-card" target="_blank">
-                        <div class="project-title">Portfolio Website</div>
-                        <div class="project-subtitle">Personal Portfolio Built with HTML, CSS, and JavaScript</div>
+                        <div class="project-title">-</div>
+                        <div class="project-subtitle">-</div>
                     </a>
                 </div>
             </div>
-            <button onclick="document.getElementById('modal-projects').close()">Close</button>
         </dialog>
         <script src="script.js"></script>
     </body>
