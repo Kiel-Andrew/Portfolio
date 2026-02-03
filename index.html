@@ -29,7 +29,7 @@
             <section id="about" class="span-3">
                 <h2><i class="fas fa-user"></i> About</h2>
                 <h3>Designer & Developer</h3>
-                <p>I design and build digital products are that user friendly and aesthetically pleasing.</p>
+                <p>I design and build digital products that are user friendly and aesthetically pleasing.</p>
                 <p>I am a UI/UX Designer and Frontend Developer. My work focuses on the combination of sleek design and functionality. The projects I make not only follows the principles of design, but also meets the needs of my clients.</p>
                 
                 <h3>What I Do</h3>
@@ -134,24 +134,70 @@
                     <a href="javascript:void(0)" class="view-all">View All ></a>
                 </div>
                 <div class="projects-grid">
-                    <a href="https://github.com/Ishkihu/Pawpedia.git" class="project-card" target="_blank">
-                        <div class="project-title">PawPedia Website</div>
-                        <div class="project-subtitle">Interactive Pet Encyclopedia</div>
+                    <a href="javascript:void(0)" class="project-tile project-trigger" data-project="pawpedia">
+                        <div class="project-image-container">
+                            <img src="Assets/pawpedia.jpg" alt="PawPedia">
+                        </div>
+                        <div class="project-info">
+                            <div class="project-header">
+                                <h3 class="project-title">PawPedia Website</h3>
+                                <div class="project-tech-stack"><span>HTML</span><span>CSS</span><span>JS</span></div>
+                            </div>
+                            <p class="project-description">Interactive Pet Encyclopedia.</p>
+                        </div>
                     </a>
-                    <a href="https://github.com/Kiel-Andrew/COS-Student-Record-Program.git" class="project-card" target="_blank">
-                        <div class="project-title">COS Student Record Program</div>
-                        <div class="project-subtitle">Monitor students information within the College of Science</div>
-                    </a>
-                    <a href="#" class="project-card" target="_blank">
-                        <div class="project-title">-</div>
-                        <div class="project-subtitle">-</div>
-                    </a>
-                    <a href="#" class="project-card" target="_blank">
-                        <div class="project-title">-</div>
-                        <div class="project-subtitle">-</div>
+
+                    <a href="javascript:void(0)" class="project-tile project-trigger" data-project="cos-record">
+                        <div class="project-image-container">
+                            <img src="Assets/cos-record.jpg" alt="COS Record">
+                        </div>
+                        <div class="project-info">
+                            <div class="project-header">
+                                <h3 class="project-title">COS Student Record</h3>
+                                <div class="project-tech-stack"><span>Java</span><span>MySQL</span></div>
+                            </div>
+                            <p class="project-description">CRUD-based Student Management Program.</p>
+                        </div>
                     </a>
                 </div>
             </section>
+
+            <dialog id="modal-project-detail">
+                <button class="modal-close" onclick="document.getElementById('modal-project-detail').close()"><i class="fas fa-times"></i></button>
+                <div class="modal-content">
+                    <div class="project-frame">
+                        <img id="detail-img" src="" alt="Project Preview" class="main-featured-img">
+                        
+                        <div class="project-detail-text">
+                            <h2 id="detail-title">Project Title</h2>
+                            <div id="detail-tech" class="project-tech-stack"></div>
+                            
+                            <hr class="divider">
+
+                            <h3>Project Purpose</h3>
+                            <p id="detail-desc"></p>
+
+                            <h3>Screenshots</h3>
+                            <div class="gallery-container">
+                                <button class="gallery-nav prev" onclick="moveGallery(-1)"><i class="fas fa-chevron-left"></i></button>
+                                <div class="gallery-wrapper" id="detail-gallery">
+                                    </div>
+                                <button class="gallery-nav next" onclick="moveGallery(1)"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+
+                            <h3>Contributions & Role</h3>
+                            <p id="detail-contributions"></p>
+
+                            <div class="modal-footer">
+                                <a id="detail-link" href="#" target="_blank" class="btn primary">
+                                    <i class="fab fa-github"></i> View Repository
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </dialog>
+
             <section id="connect" class="span-full">
                 <div class="connect-container">
                     <div class="connect-column">
@@ -174,7 +220,7 @@
             <p>&copy; 2026 - Kiel Andrew Esta Portfolio. @All rights reserved.</p>
         </footer>
 
-        
+
         <dialog id="modal-experience">
             <button class="modal-close" onclick="document.getElementById('modal-experience').close()"><i class="fas fa-times"></i></button>
             <h2>All Experiences</h2>
@@ -258,21 +304,33 @@
             <h2>All Projects</h2>
             <div class="modal-content">
                 <div class="projects-grid">
-                    <a href="https://github.com/Ishkihu/Pawpedia.git" class="project-card" target="_blank">
-                        <div class="project-title">PawPedia Website</div>
-                        <div class="project-subtitle">Interactive Pet Encyclopedia</div>
+                    <a href="https://github.com/Ishkihu/Pawpedia.git" class="project-tile" target="_blank">
+                        <img src="Assets/pawpedia.jpg" alt="PawPedia screenshot">
+                        <div class="project-info">
+                            <div class="project-title">PawPedia Website</div>
+                            <div class="project-subtitle">Interactive Pet Encyclopedia</div>
+                        </div>
                     </a>
-                    <a href="https://github.com/Kiel-Andrew/COS-Student-Record-Program.git" class="project-card" target="_blank">
-                        <div class="project-title">COS Student Record Program</div>
-                        <div class="project-subtitle">Monitor students information within the College of Science</div>
+                    <a href="https://github.com/Kiel-Andrew/COS-Student-Record-Program.git" class="project-tile" target="_blank">
+                        <img src="Assets/cos-record.jpg" alt="COS Student Record screenshot">
+                        <div class="project-info">
+                            <div class="project-title">COS Student Record Program</div>
+                            <div class="project-subtitle">Monitor students information within the College of Science</div>
+                        </div>
                     </a>
-                    <a href="#" class="project-card" target="_blank">
-                        <div class="project-title">-</div>
-                        <div class="project-subtitle">-</div>
+                    <a href="#" class="project-tile" target="_blank">
+                        <img src="Assets/placeholder.jpg" alt="Placeholder project">
+                        <div class="project-info">
+                            <div class="project-title">Coming Soon</div>
+                            <div class="project-subtitle">More projects will be added here</div>
+                        </div>
                     </a>
-                    <a href="#" class="project-card" target="_blank">
-                        <div class="project-title">-</div>
-                        <div class="project-subtitle">-</div>
+                    <a href="#" class="project-tile" target="_blank">
+                        <img src="Assets/placeholder.jpg" alt="Placeholder project">
+                        <div class="project-info">
+                            <div class="project-title">-</div>
+                            <div class="project-subtitle">-</div>
+                        </div>
                     </a>
                 </div>
             </div>

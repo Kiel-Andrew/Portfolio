@@ -213,6 +213,91 @@ h2 i {
     gap: 8px;
 }
 
+/* Project tile: image (~70% height) + info (~30% height) */
+/* Projects Section Customization */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.project-tile {
+    display: flex;
+    flex-direction: column;
+    background: #ffffff; /* Or your preferred card background */
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-tile:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.project-image-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+}
+
+.project-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* The "Separate Line" Border */
+.project-info {
+    padding: 1.25rem;
+    border-top: 1px solid #e2e8f0; /* Horizontal line between image and info */
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.project-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+    color: #1a202c;
+}
+
+/* Tech Stack Pills inside Project */
+.project-tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.project-tech-stack span {
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    background: #f1f5f9;
+    color: #475569;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.project-description {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #64748b;
+    margin: 0;
+}
+
 /* 7. Tech Stack Badge Styling */
 .tech-grid-horizontal {
     display: flex;
@@ -307,6 +392,75 @@ dialog {
 
 .modal-close:hover {
     color: var(--text-main);
+}
+
+.project-frame {
+    display: flex;
+    flex-direction: column;
+    max-height: 90vh; /* Keeps it within the screen */
+    overflow-y: auto;
+}
+
+.main-featured-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+/* Gallery Styling */
+.gallery-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    margin: 1rem 0;
+    background: #f8fafc;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.gallery-wrapper {
+    display: flex;
+    gap: 10px;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* Hide scrollbar for Chrome/Safari below */
+}
+
+.gallery-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.gallery-item {
+    min-width: 250px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+}
+
+.gallery-nav {
+    background: white;
+    border: 1px solid #cbd5e1;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    position: absolute;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.gallery-nav.prev { left: -15px; }
+.gallery-nav.next { right: -15px; }
+
+.modal-footer {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+    text-align: center;
 }
 
 /* Prevent the background from scrolling when any modal is open */
