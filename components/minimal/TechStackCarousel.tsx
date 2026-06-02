@@ -62,7 +62,7 @@ export default function TechStackCarousel() {
   );
 
   return (
-    <section className="py-4 border-t border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950 transition-colors duration-300">
+    <section className="py-6 border-t border-zinc-100 dark:border-zinc-900 bg-white dark:bg-zinc-950 transition-colors duration-300">
       <div className="mx-auto max-w-6xl px-6 sm:px-12">
         <div className="space-y-4">
           {Object.entries(groupedByCategory).map(([category, items]) => (
@@ -71,13 +71,13 @@ export default function TechStackCarousel() {
                 {category}
               </h3>
               
-              {/* Horizontal scrolling carousel - very compact */}
+              {/* Horizontal scrolling carousel - borderless items */}
               <div className="overflow-x-auto pb-2">
                 <div className="flex gap-4 min-w-max">
                   {items.map((tech) => (
                     <div
                       key={tech.id}
-                      className="flex flex-col items-center gap-1.5 p-2.5 rounded-lg border border-zinc-100 dark:border-zinc-900 bg-zinc-50/50 dark:bg-zinc-900/20 hover:bg-zinc-100 dark:hover:bg-zinc-900/50 transition-colors"
+                      className="flex flex-col items-center gap-1.5 p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900/50 transition-colors"
                     >
                       {tech.image ? (
                         <div className="w-10 h-10 relative">
@@ -85,11 +85,11 @@ export default function TechStackCarousel() {
                             src={tech.image}
                             alt={tech.name}
                             fill
-                            className="object-contain"
+                            className="object-contain filter grayscale dark:invert-[0.2]"
                           />
                         </div>
                       ) : (
-                        <div className="w-10 h-10 bg-gradient-to-br from-zinc-200 to-zinc-300 dark:from-zinc-800 dark:to-zinc-700 rounded flex items-center justify-center">
+                        <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded flex items-center justify-center">
                           <span className="text-[10px] text-zinc-500">Icon</span>
                         </div>
                       )}
@@ -97,7 +97,7 @@ export default function TechStackCarousel() {
                         {tech.name}
                       </span>
                       {tech.proficiency && (
-                        <span className="text-[10px] text-zinc-400 dark:text-zinc-500">
+                        <span className="text-[10px] text-zinc-400 dark:text-zinc-500 font-medium">
                           {tech.proficiency}%
                         </span>
                       )}

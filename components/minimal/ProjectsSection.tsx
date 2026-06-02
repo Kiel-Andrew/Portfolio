@@ -34,57 +34,62 @@ export default function ProjectsSection() {
 
   if (loading) {
     return (
-      <section className="py-16">
-        <p className="text-zinc-400">Loading projects...</p>
+      <section className="py-12 md:py-16 bg-white dark:bg-zinc-950">
+        <div className="mx-auto max-w-6xl px-6 sm:px-12">
+          <p className="text-xs text-zinc-400">Loading projects...</p>
+        </div>
       </section>
     );
   }
 
   return (
     <>
-      <section className="py-16 border-t border-zinc-200 dark:border-zinc-800">
+      <section className="py-12 md:py-16 border-t border-zinc-100 dark:border-zinc-900 bg-white dark:bg-zinc-950 transition-colors duration-300">
         <div className="mx-auto max-w-6xl px-6 sm:px-12">
-          <h2 className="text-3xl font-bold text-zinc-900 dark:text-zinc-100 mb-12">
+          <h2 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 mb-8 uppercase tracking-wider">
             Projects
           </h2>
 
           {projects.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-zinc-400">No projects yet.</p>
+            <div className="text-center py-6">
+              <p className="text-xs text-zinc-400">No projects yet.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {projects.map((project) => (
                 <div
                   key={project.id}
                   onClick={() => setSelectedProject(project)}
-                  className="group cursor-pointer"
+                  className="group cursor-pointer space-y-3"
                 >
-                  <div className="relative w-full aspect-video overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-800 mb-4">
+                  <div className="relative w-full aspect-video overflow-hidden rounded-lg bg-zinc-100 dark:bg-zinc-900">
                     {project.coverImage && (
                       <Image
                         src={project.coverImage}
                         alt={project.title}
                         fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-300"
+                        className="object-cover group-hover:scale-[1.02] transition-transform duration-300"
                       />
                     )}
                   </div>
-                  <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                    {project.title}
-                  </h3>
-                  <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-2 line-clamp-2">
-                    {project.description}
-                  </p>
-                  <div className="flex gap-2 mt-3 flex-wrap">
-                    {project.tags.slice(0, 3).map((tag) => (
-                      <span
-                        key={tag}
-                        className="text-xs px-2 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 rounded"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+                  
+                  <div className="space-y-1.5">
+                    <h3 className="text-xs sm:text-sm font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors">
+                      {project.title}
+                    </h3>
+                    <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal line-clamp-2">
+                      {project.description}
+                    </p>
+                    <div className="flex gap-2 pt-1 flex-wrap">
+                      {project.tags.slice(0, 3).map((tag) => (
+                        <span
+                          key={tag}
+                          className="text-[10px] px-2.5 py-0.5 bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 font-bold rounded"
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -93,26 +98,26 @@ export default function ProjectsSection() {
         </div>
       </section>
 
-      {/* Project Modal */}
+      {/* Project Modal - fully monochrome */}
       {selectedProject && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-zinc-900 rounded-lg max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="sticky top-0 z-10 flex items-center justify-between p-6 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900">
-              <h2 className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
+          <div className="bg-white dark:bg-zinc-900 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-zinc-200 dark:border-zinc-800">
+            <div className="sticky top-0 z-10 flex items-center justify-between p-5 border-b border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900">
+              <h2 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">
                 {selectedProject.title}
               </h2>
               <button
                 onClick={() => setSelectedProject(null)}
-                className="p-2 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors"
+                className="p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-lg transition-colors"
               >
-                <FiX className="w-6 h-6 text-zinc-600 dark:text-zinc-400" />
+                <FiX className="w-4 h-4 text-zinc-800 dark:text-zinc-200" />
               </button>
             </div>
 
-            <div className="p-6 space-y-6">
+            <div className="p-6 space-y-5">
               {/* Cover Image */}
               {selectedProject.coverImage && (
-                <div className="relative w-full aspect-video overflow-hidden rounded-lg">
+                <div className="relative w-full aspect-video overflow-hidden rounded-xl">
                   <Image
                     src={selectedProject.coverImage}
                     alt={selectedProject.title}
@@ -123,25 +128,25 @@ export default function ProjectsSection() {
               )}
 
               {/* Description */}
-              <div>
-                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-2">
+              <div className="space-y-1.5">
+                <h3 className="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wider">
                   Description
                 </h3>
-                <p className="text-zinc-700 dark:text-zinc-300 leading-relaxed">
+                <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
                   {selectedProject.description}
                 </p>
               </div>
 
               {/* Tech Stack */}
-              <div>
-                <h3 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100 mb-3">
+              <div className="space-y-2">
+                <h3 className="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wider">
                   Tech Stack
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {selectedProject.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-3 py-1 bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 rounded-full text-sm"
+                      className="px-2.5 py-0.5 bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 font-bold rounded text-[10px]"
                     >
                       {tag}
                     </span>
@@ -150,15 +155,15 @@ export default function ProjectsSection() {
               </div>
 
               {/* Links */}
-              <div className="flex gap-4 pt-4 border-t border-zinc-200 dark:border-zinc-800">
+              <div className="flex gap-3 pt-4 border-t border-zinc-100 dark:border-zinc-800">
                 {selectedProject.liveUrl && (
                   <a
                     href={selectedProject.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                    className="flex items-center gap-1.5 px-4 py-2 bg-zinc-950 dark:bg-zinc-100 text-white dark:text-zinc-950 rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors font-bold text-xs shadow-sm"
                   >
-                    <FiExternalLink className="w-4 h-4" />
+                    <FiExternalLink className="w-3.5 h-3.5" />
                     Live Demo
                   </a>
                 )}
@@ -167,9 +172,9 @@ export default function ProjectsSection() {
                     href={selectedProject.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-2 px-4 py-2 border border-zinc-300 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors"
+                    className="flex items-center gap-1.5 px-4 py-2 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 rounded-lg hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors font-bold text-xs shadow-sm"
                   >
-                    <FiGithub className="w-4 h-4" />
+                    <FiGithub className="w-3.5 h-3.5" />
                     GitHub
                   </a>
                 )}
