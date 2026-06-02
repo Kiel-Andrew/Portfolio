@@ -1,7 +1,6 @@
 "use client";
 
-import { Monitor, Type } from "lucide-react";
-
+import { Briefcase, Paintbrush } from "lucide-react";
 import { useViewStore } from "@/lib/view-store";
 
 export default function ViewToggle() {
@@ -9,33 +8,22 @@ export default function ViewToggle() {
   const setMode = useViewStore((state) => state.setMode);
 
   return (
-    <div className="inline-flex items-center gap-1 rounded-full border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 p-1 text-xs font-medium text-zinc-600 dark:text-zinc-400 shadow-sm backdrop-blur-sm">
-      <button
-        type="button"
-        onClick={() => setMode("minimal")}
-        aria-pressed={mode === "minimal"}
-        className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition ${
-          mode === "minimal"
-            ? "bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900"
-            : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
-        }`}
-      >
-        <Type className="h-3.5 w-3.5" />
-        Minimal
-      </button>
-      <button
-        type="button"
-        onClick={() => setMode("maximized")}
-        aria-pressed={mode === "maximized"}
-        className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 transition ${
-          mode === "maximized"
-            ? "bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900"
-            : "text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-100"
-        }`}
-      >
-        <Monitor className="h-3.5 w-3.5" />
-        Maximized
-      </button>
-    </div>
+    <button
+      onClick={() => setMode(mode === "minimal" ? "maximized" : "minimal")}
+      className="inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold border border-zinc-200 dark:border-zinc-800 bg-white/80 dark:bg-zinc-900/80 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition shadow-sm backdrop-blur-sm"
+      aria-label="Toggle view mode"
+    >
+      {mode === "minimal" ? (
+        <>
+          <Briefcase className="h-3.5 w-3.5 text-blue-600 dark:text-blue-400" />
+          <span>Professional Mode</span>
+        </>
+      ) : (
+        <>
+          <Paintbrush className="h-3.5 w-3.5 text-purple-600 dark:text-purple-400" />
+          <span>Creative Mode</span>
+        </>
+      )}
+    </button>
   );
 }

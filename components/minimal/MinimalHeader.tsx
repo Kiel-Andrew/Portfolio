@@ -17,8 +17,8 @@ export default function MinimalHeader() {
   const isDark = currentTheme === "dark";
 
   return (
-    <header className="sticky top-0 z-50 bg-white/95 dark:bg-zinc-900/95 backdrop-blur border-b border-zinc-200 dark:border-zinc-800">
-      <div className="mx-auto max-w-6xl px-6 py-4 sm:px-12">
+    <header className="w-full bg-transparent border-none z-50">
+      <div className="mx-auto max-w-6xl px-6 py-6 sm:px-12">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="text-2xl font-bold text-zinc-900 dark:text-zinc-100">
@@ -30,19 +30,25 @@ export default function MinimalHeader() {
             {/* Professional Mode button */}
             <ViewToggle />
 
-            {/* Dark/Light mode toggle */}
+            {/* Dark/Light mode toggle switch */}
             <button
               onClick={() => setTheme(isDark ? "light" : "dark")}
-              className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
+              className="relative inline-flex h-8 w-14 shrink-0 cursor-pointer rounded-full border-2 border-transparent bg-zinc-200 dark:bg-zinc-800 transition-colors duration-200 ease-in-out focus:outline-none"
               aria-label="Toggle theme"
             >
-              {!mounted ? (
-                <div className="w-5 h-5" />
-              ) : isDark ? (
-                <Sun className="w-5 h-5 text-zinc-600 dark:text-zinc-300" />
-              ) : (
-                <Moon className="w-5 h-5 text-zinc-600 dark:text-zinc-300" />
-              )}
+              <span
+                className={`${
+                  isDark ? "translate-x-6 bg-zinc-950" : "translate-x-0 bg-white"
+                } pointer-events-none flex h-7 w-7 transform items-center justify-center rounded-full shadow-lg ring-0 transition duration-200 ease-in-out`}
+              >
+                {!mounted ? (
+                  <div className="w-4 h-4" />
+                ) : isDark ? (
+                  <Moon className="w-4 h-4 fill-blue-400 text-blue-400" />
+                ) : (
+                  <Sun className="w-4 h-4 fill-yellow-500 text-yellow-500" />
+                )}
+              </span>
             </button>
           </div>
         </div>
