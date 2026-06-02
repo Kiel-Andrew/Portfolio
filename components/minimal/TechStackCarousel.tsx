@@ -62,8 +62,8 @@ export default function TechStackCarousel() {
   );
 
   return (
-    <section className="py-6 border-t border-zinc-100 dark:border-zinc-900 bg-white dark:bg-zinc-950 transition-colors duration-300">
-      <div className="mx-auto max-w-6xl px-6 sm:px-12">
+    <section className="py-2 bg-white dark:bg-zinc-950 transition-colors duration-300">
+      <div className="mx-auto max-w-6xl px-8 sm:px-16 md:px-24 lg:px-32">
         <div className="space-y-4">
           {Object.entries(groupedByCategory).map(([category, items]) => (
             <div key={category} className="space-y-2">
@@ -77,7 +77,7 @@ export default function TechStackCarousel() {
                   {items.map((tech) => (
                     <div
                       key={tech.id}
-                      className="flex flex-col items-center gap-1.5 p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-900/50 transition-colors"
+                      className="flex flex-col items-center gap-1.5 p-2 rounded-none hover:bg-zinc-100 dark:hover:bg-zinc-900/50 transition-colors"
                     >
                       {tech.image ? (
                         <div className="w-10 h-10 relative">
@@ -89,7 +89,7 @@ export default function TechStackCarousel() {
                           />
                         </div>
                       ) : (
-                        <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded flex items-center justify-center">
+                        <div className="w-10 h-10 bg-zinc-100 dark:bg-zinc-900 rounded-none flex items-center justify-center">
                           <span className="text-[10px] text-zinc-500">Icon</span>
                         </div>
                       )}

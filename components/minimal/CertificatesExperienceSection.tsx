@@ -65,8 +65,8 @@ export default function CertificatesExperienceSection() {
   }
 
   return (
-    <section className="py-12 md:py-16 border-t border-zinc-100 dark:border-zinc-900 bg-white dark:bg-zinc-950 transition-colors duration-300">
-      <div className="mx-auto max-w-6xl px-6 sm:px-12">
+    <section className="py-2 bg-white dark:bg-zinc-950 transition-colors duration-300">
+      <div className="mx-auto max-w-6xl px-8 sm:px-16 md:px-24 lg:px-32">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
           
           {/* Left Column: Certifications (col-span-1) - borderless and flat */}
@@ -131,7 +131,7 @@ export default function CertificatesExperienceSection() {
                           {exp.company}
                         </p>
                       </div>
-                      <span className="text-[10px] px-2.5 py-0.5 bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 font-bold rounded-full">
+                      <span className="text-[10px] px-2.5 py-0.5 bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 font-bold rounded-none">
                         {exp.current ? "Current" : "Past"}
                       </span>
                     </div>

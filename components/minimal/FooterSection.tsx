@@ -8,8 +8,8 @@ export default function FooterSection() {
   };
 
   return (
-    <footer className="border-t border-zinc-100 dark:border-zinc-900 py-12 md:py-16 bg-white dark:bg-zinc-950 transition-colors duration-300">
-      <div className="mx-auto max-w-6xl px-6 sm:px-12">
+    <footer className="py-2 bg-white dark:bg-zinc-950 transition-colors duration-300">
+      <div className="mx-auto max-w-6xl px-8 sm:px-16 md:px-24 lg:px-32">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           {/* Left: Social Links */}
           <div className="space-y-4">
@@ -57,7 +57,7 @@ export default function FooterSection() {
             </p>
             <button
               onClick={handleEmail}
-              className="flex items-center gap-1.5 px-4 py-2 bg-zinc-950 dark:bg-zinc-100 text-white dark:text-zinc-950 rounded-lg hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors font-bold text-xs shadow-sm"
+              className="flex items-center gap-1.5 px-4 py-2 bg-zinc-950 dark:bg-zinc-100 text-white dark:text-zinc-950 rounded-none hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors font-bold text-xs shadow-sm"
             >
               <FiMail className="w-3.5 h-3.5" />
               Send Email
@@ -66,7 +66,7 @@ export default function FooterSection() {
         </div>
 
         {/* Divider */}
-        <div className="border-t border-zinc-100 dark:border-zinc-900 mt-12 pt-6">
+        <div className="border-none mt-12 pt-6">
           <p className="text-center text-[10px] text-zinc-400 dark:text-zinc-500">
             © 2026 Kiel Andrew Esta. All rights reserved.
           </p>
