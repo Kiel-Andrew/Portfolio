@@ -16,33 +16,33 @@ export default function FooterSection() {
             <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
               Connect
             </h3>
-            <div className="flex flex-wrap gap-2.5">
+            <div className="grid grid-cols-3 gap-2.5 w-full">
               <a
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-4 py-2 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 rounded-none hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors font-bold text-xs shadow-sm"
+                className="flex w-full items-center justify-center gap-1.5 px-4 py-2 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 rounded-none hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors font-bold text-xs shadow-sm text-center"
               >
-                <FiLinkedin className="w-3.5 h-3.5" />
-                <span>LinkedIn</span>
+                <FiLinkedin className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">LinkedIn</span>
               </a>
               <a
                 href="https://github.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-4 py-2 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 rounded-none hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors font-bold text-xs shadow-sm"
+                className="flex w-full items-center justify-center gap-1.5 px-4 py-2 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 rounded-none hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors font-bold text-xs shadow-sm text-center"
               >
-                <FiGithub className="w-3.5 h-3.5" />
-                <span>GitHub</span>
+                <FiGithub className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">GitHub</span>
               </a>
               <a
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-1.5 px-4 py-2 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 rounded-none hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors font-bold text-xs shadow-sm"
+                className="flex w-full items-center justify-center gap-1.5 px-4 py-2 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 rounded-none hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors font-bold text-xs shadow-sm text-center"
               >
-                <FiInstagram className="w-3.5 h-3.5" />
-                <span>Instagram</span>
+                <FiInstagram className="w-3.5 h-3.5 shrink-0" />
+                <span className="truncate">Instagram</span>
               </a>
             </div>
           </div>
