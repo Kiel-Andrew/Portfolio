@@ -1,10 +1,17 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { Moon, Sun, Zap } from "lucide-react";
 import { useTheme } from "next-themes";
 
 export default function MinimalHeader() {
   const { theme, setTheme, resolvedTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const currentTheme = resolvedTheme ?? theme ?? "light";
   const isDark = currentTheme === "dark";
 
@@ -35,7 +42,9 @@ export default function MinimalHeader() {
               className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
               aria-label="Toggle theme"
             >
-              {isDark ? (
+              {!mounted ? (
+                <div className="w-5 h-5" />
+              ) : isDark ? (
                 <Sun className="w-5 h-5 text-zinc-600 dark:text-zinc-300" />
               ) : (
                 <Moon className="w-5 h-5 text-zinc-600 dark:text-zinc-300" />

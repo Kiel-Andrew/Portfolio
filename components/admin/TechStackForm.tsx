@@ -120,7 +120,7 @@ export default function TechStackForm() {
         <input
           type="file"
           accept="image/*"
-          onChange={(e) => setImage(e.files?.[0] || null)}
+          onChange={(e) => setImage(e.target.files?.[0] || null)}
           className="mt-2 block w-full text-sm text-zinc-400 file:mr-4 file:rounded-lg file:border-0 file:bg-blue-600 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-white hover:file:bg-blue-700"
         />
       </div>
