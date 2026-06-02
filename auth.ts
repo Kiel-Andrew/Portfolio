@@ -4,17 +4,9 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 
 import { prisma } from "@/lib/prisma";
 
-const adminEmail = process.env.ADMIN_EMAIL;
-const githubId = process.env.GITHUB_ID;
-const githubSecret = process.env.GITHUB_SECRET;
-
-if (!adminEmail) {
-  throw new Error("ADMIN_EMAIL is not set.");
-}
-
-if (!githubId || !githubSecret) {
-  throw new Error("GITHUB_ID or GITHUB_SECRET is not set.");
-}
+const adminEmail = process.env.ADMIN_EMAIL || "placeholder@example.com";
+const githubId = process.env.GITHUB_ID || "placeholder_id";
+const githubSecret = process.env.GITHUB_SECRET || "placeholder_secret";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -26,6 +18,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   callbacks: {
     signIn({ user }) {
+      if (!process.env.ADMIN_EMAIL) {
+        console.error("ADMIN_EMAIL is not set in environment.");
+        return false;
+      }
       return user.email === adminEmail;
     },
   },
