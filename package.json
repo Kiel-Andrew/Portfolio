@@ -38,5 +38,8 @@
     "prisma": "^5.0.0",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "overrides": {
+    "uuid": "^9.0.2"
   }
 }
