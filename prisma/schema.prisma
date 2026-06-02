@@ -97,6 +97,7 @@ model TechStack {
   name        String   @unique
   category    String
   iconName    String
+  image       String?  // URL to tech stack icon/image in Supabase Storage
   proficiency Int?
   createdAt   DateTime @default(now())
 }

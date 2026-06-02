@@ -197,19 +197,78 @@ export async function deleteCertification(id: string) {
   }
 }
 
+export async function uploadTechStackImage(
+  file: File
+): Promise<string | null> {
+  try {
+    const timestamp = Date.now();
+    const fileName = `tech-stack/${timestamp}-${file.name}`;
+
+    const { error } = await supabase.storage
+      .from("portfolio")
+      .upload(fileName, file);
+
+    if (error) throw error;
+
+    const { data } = supabase.storage
+      .from("portfolio")
+      .getPublicUrl(fileName);
+
+    return data.publicUrl;
+  } catch (error) {
+    console.error("Tech stack image upload failed:", error);
+    return null;
+  }
+}
+
 export async function createTechStack(formData: {
   name: string;
   category: string;
   iconName: string;
+  imageUrl?: string;
   proficiency?: number;
 }) {
   try {
     const tech = await prisma.techStack.create({
-      data: formData,
+      data: {
+        name: formData.name,
+        category: formData.category,
+        iconName: formData.iconName,
+        image: formData.imageUrl,
+        proficiency: formData.proficiency,
+      },
     });
     return tech;
   } catch (error) {
     console.error("Create tech stack failed:", error);
+    throw error;
+  }
+}
+
+export async function updateTechStack(
+  id: string,
+  formData: {
+    name?: string;
+    category?: string;
+    iconName?: string;
+    imageUrl?: string;
+    proficiency?: number;
+  }
+) {
+  try {
+    const tech = await prisma.techStack.update({
+      where: { id },
+      data: {
+        ...(formData.name && { name: formData.name }),
+        ...(formData.category && { category: formData.category }),
+        ...(formData.iconName && { iconName: formData.iconName }),
+        ...(formData.imageUrl && { image: formData.imageUrl }),
+        ...(formData.proficiency !== undefined && { proficiency: formData.proficiency }),
+      },
+    });
+    return tech;
+  } catch (error) {
+    console.error("Update tech stack failed:", error);
     throw error;
   }
 }
