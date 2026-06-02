@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Mail, MessageSquare, MapPin, Moon, Sun } from "lucide-react";
+import { Mail, MessageSquare, MapPin, Moon, Sun, BookOpen } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import ViewToggle from "@/components/layout/ViewToggle";
@@ -18,14 +18,14 @@ export default function HeroSection() {
   const isDark = currentTheme === "dark";
 
   return (
-    <section className="relative py-2 overflow-hidden bg-white dark:bg-zinc-950 transition-colors duration-300 animate-in fade-in duration-500">
+    <section className="relative pt-16 pb-2 overflow-hidden bg-white dark:bg-zinc-950 transition-colors duration-300 animate-in fade-in duration-500">
       <div className="mx-auto max-w-6xl px-8 sm:px-16 md:px-24 lg:px-32">
         {/* 30/70 Ratio Flex Grid */}
         <div className="flex flex-col md:flex-row gap-8 items-start">
           
           {/* Left Column (30%): Sharp Rectangular Portrait Image */}
           <div className="relative z-10 w-full md:w-[30%] shrink-0">
-            <div className="relative w-full aspect-[3/4] overflow-hidden border border-zinc-200 dark:border-zinc-800 shadow-md">
+            <div className="relative w-full aspect-[3/4] overflow-hidden">
               <Image
                 src="/profile.jpg"
                 alt="Kiel Andrew Esta"
@@ -89,7 +89,7 @@ export default function HeroSection() {
             </div>
 
             {/* Action Buttons - completely sharp/no round */}
-            <div className="flex gap-2.5 pt-2">
+            <div className="flex flex-wrap gap-2.5 pt-2">
               <button className="flex items-center gap-1.5 px-4 py-2 bg-zinc-950 dark:bg-zinc-100 text-white dark:text-zinc-950 rounded-none hover:bg-zinc-800 dark:hover:bg-zinc-200 transition-colors font-bold text-xs shadow-sm">
                 <MessageSquare className="w-3.5 h-3.5" />
                 Chat with Me
@@ -97,6 +97,10 @@ export default function HeroSection() {
               <button className="flex items-center gap-1.5 px-4 py-2 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 rounded-none hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors font-bold text-xs shadow-sm">
                 <Mail className="w-3.5 h-3.5" />
                 Send Email
+              </button>
+              <button className="flex items-center gap-1.5 px-4 py-2 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 rounded-none hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors font-bold text-xs shadow-sm">
+                <BookOpen className="w-3.5 h-3.5" />
+                Blog
               </button>
             </div>
 
