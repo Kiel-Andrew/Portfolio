@@ -30,6 +30,7 @@ export default function HeroSection() {
                 src="/profile.jpg"
                 alt="Kiel Andrew Esta"
                 fill
+                sizes="(max-width: 768px) 100vw, 33vw"
                 className="object-cover"
                 priority
               />

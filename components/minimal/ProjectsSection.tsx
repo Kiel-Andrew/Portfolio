@@ -68,6 +68,7 @@ export default function ProjectsSection() {
                         src={project.coverImage}
                         alt={project.title}
                         fill
+                        sizes="(max-width: 768px) 100vw, 50vw"
                         className="object-cover group-hover:scale-[1.02] transition-transform duration-300"
                       />
                     )}
@@ -122,6 +123,7 @@ export default function ProjectsSection() {
                     src={selectedProject.coverImage}
                     alt={selectedProject.title}
                     fill
+                    sizes="(max-width: 768px) 100vw, 672px"
                     className="object-cover"
                   />
                 </div>
