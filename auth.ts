@@ -24,9 +24,6 @@ export const authOptions: NextAuthOptions = {
       return user.email === adminEmail;
     },
   },
-  pages: {
-    signIn: "/api/auth/signin",
-  },
   session: {
     strategy: "jwt", // Use JWT session strategy for stateless Next.js middleware protection
   },
