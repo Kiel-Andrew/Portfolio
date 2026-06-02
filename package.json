@@ -40,9 +40,9 @@
     "typescript": "^5"
   },
   "overrides": {
-    "uuid": "^9.0.2"
+    "uuid": "^9.0.1"
   },
   "resolutions": {
-    "uuid": "^9.0.2"
+    "uuid": "^9.0.1"
   }
 }
