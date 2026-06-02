@@ -17,11 +17,18 @@ export const authOptions: NextAuthOptions = {
   ],
   callbacks: {
     async signIn({ user }) {
+      console.log("DEBUG: NextAuth signIn callback triggered.");
+      console.log("GitHub profile email received:", user?.email);
+      console.log("Configured ADMIN_EMAIL in environment:", adminEmail);
+      
       if (!process.env.ADMIN_EMAIL) {
         console.error("ADMIN_EMAIL is not set in environment.");
         return false;
       }
-      return user.email === adminEmail;
+      
+      const isAllowed = user.email === adminEmail;
+      console.log("Email comparison result:", isAllowed ? "MATCH (Access Granted)" : "MISMATCH (Access Denied)");
+      return isAllowed;
     },
   },
   session: {
