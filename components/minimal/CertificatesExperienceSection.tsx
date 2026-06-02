@@ -35,14 +35,18 @@ export default function CertificatesExperienceSection() {
 
   useEffect(() => {
     Promise.all([
-      fetch("/api/certificates").then((r) => r.json()),
-      fetch("/api/experiences").then((r) => r.json()),
+      fetch("/api/certificates").then((r) => (r.ok ? r.json() : [])),
+      fetch("/api/experiences").then((r) => (r.ok ? r.json() : [])),
     ])
       .then(([certs, exps]) => {
-        setCertificates(certs);
-        setExperiences(exps);
+        setCertificates(Array.isArray(certs) ? certs : []);
+        setExperiences(Array.isArray(exps) ? exps : []);
       })
-      .catch((error) => console.error("Failed to fetch:", error))
+      .catch((error) => {
+        console.error("Failed to fetch:", error);
+        setCertificates([]);
+        setExperiences([]);
+      })
       .finally(() => setLoading(false));
   }, []);
 

@@ -21,11 +21,14 @@ export default function ProjectsSection() {
 
   useEffect(() => {
     fetch("/api/projects")
-      .then((r) => r.json())
+      .then((r) => (r.ok ? r.json() : []))
       .then((data) => {
-        setProjects(data);
+        setProjects(Array.isArray(data) ? data : []);
       })
-      .catch((error) => console.error("Failed to fetch projects:", error))
+      .catch((error) => {
+        console.error("Failed to fetch projects:", error);
+        setProjects([]);
+      })
       .finally(() => setLoading(false));
   }, []);
 
