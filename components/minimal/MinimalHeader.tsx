@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Moon, Sun, Zap } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import ViewToggle from "@/components/layout/ViewToggle";
 
 export default function MinimalHeader() {
   const { theme, setTheme, resolvedTheme } = useTheme();
@@ -27,14 +28,7 @@ export default function MinimalHeader() {
           {/* Right buttons */}
           <div className="flex items-center gap-4">
             {/* Professional Mode button */}
-            <button
-              className="p-2 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors cursor-not-allowed opacity-60"
-              aria-label="Professional mode (coming soon)"
-              disabled
-              title="Professional mode - coming soon"
-            >
-              <Zap className="w-5 h-5 text-zinc-600 dark:text-zinc-300" />
-            </button>
+            <ViewToggle />
 
             {/* Dark/Light mode toggle */}
             <button

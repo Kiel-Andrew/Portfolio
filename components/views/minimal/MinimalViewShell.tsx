@@ -8,10 +8,9 @@ type MinimalViewShellProps = {
 
 export default function MinimalViewShell({ children }: MinimalViewShellProps) {
   return (
-    <div className="flex min-h-screen flex-col bg-white text-zinc-950">
-      <SiteHeader />
+    <div className="flex min-h-screen flex-col bg-white dark:bg-zinc-950 text-zinc-950 dark:text-zinc-50 transition-colors duration-300">
       <main className="flex-1">
-        <div className="mx-auto w-full max-w-5xl px-6 py-12">{children}</div>
+        {children}
       </main>
     </div>
   );
