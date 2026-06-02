@@ -41,5 +41,8 @@
   },
   "overrides": {
     "uuid": "^9.0.2"
+  },
+  "resolutions": {
+    "uuid": "^9.0.2"
   }
 }
