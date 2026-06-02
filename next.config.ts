@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  serverExternalPackages: ["next-auth", "@auth/core", "openid-client"],
+  serverExternalPackages: ["next-auth", "openid-client"],
   images: {
     remotePatterns: [
       {

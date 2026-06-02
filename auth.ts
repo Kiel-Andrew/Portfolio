@@ -1,23 +1,22 @@
-import NextAuth from "next-auth";
-import GitHub from "next-auth/providers/github";
+import GitHubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@auth/prisma-adapter";
-
 import { prisma } from "@/lib/prisma";
+import type { NextAuthOptions } from "next-auth";
 
 const adminEmail = process.env.ADMIN_EMAIL || "placeholder@example.com";
 const githubId = process.env.GITHUB_ID || "placeholder_id";
 const githubSecret = process.env.GITHUB_SECRET || "placeholder_secret";
 
-export const { handlers, auth, signIn, signOut } = NextAuth({
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
-    GitHub({
+    GitHubProvider({
       clientId: githubId,
       clientSecret: githubSecret,
     }),
   ],
   callbacks: {
-    signIn({ user }) {
+    async signIn({ user }) {
       if (!process.env.ADMIN_EMAIL) {
         console.error("ADMIN_EMAIL is not set in environment.");
         return false;
@@ -25,4 +24,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       return user.email === adminEmail;
     },
   },
-});
+  pages: {
+    signIn: "/api/auth/signin",
+  },
+  session: {
+    strategy: "jwt", // Use JWT session strategy for stateless Next.js middleware protection
+  },
+};
