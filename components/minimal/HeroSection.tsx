@@ -27,7 +27,7 @@ export default function HeroSection() {
           <div className="relative z-10 w-full md:w-[30%] shrink-0">
             <div className="relative w-full aspect-[3/4] overflow-hidden">
               <Image
-                src="/profile.jpg"
+                src="/Esta_Profile.jpg"
                 alt="Kiel Andrew Esta"
                 fill
                 sizes="(max-width: 768px) 100vw, 33vw"
