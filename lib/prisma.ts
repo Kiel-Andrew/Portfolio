@@ -8,7 +8,7 @@ export const prisma =
   new PrismaClient({
     datasources: {
       db: {
-        url: process.env.DIRECT_URL || process.env.DATABASE_URL || "postgresql://dummy:dummy@localhost:5432/dummy",
+        url: process.env.DATABASE_URL || process.env.DIRECT_URL || "postgresql://dummy:dummy@localhost:5432/dummy",
       },
     },
   });
