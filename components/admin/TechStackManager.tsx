@@ -25,7 +25,7 @@ interface TechStackManagerProps {
   initialTechStack: TechStackItem[];
 }
 
-const categories = ["Frontend", "Backend", "DevOps", "Design", "Other"];
+const categories = ["Frontend", "Backend", "Design", "Tools"];
 
 export default function TechStackManager({ initialTechStack }: TechStackManagerProps) {
   const [techStack, setTechStack] = useState<TechStackItem[]>(initialTechStack);
@@ -81,6 +81,13 @@ export default function TechStackManager({ initialTechStack }: TechStackManagerP
 
   function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0] || null;
+    if (file && file.size > 5 * 1024 * 1024) {
+      alert("File size exceeds 5MB limit. Please upload a smaller file.");
+      e.target.value = ""; // Reset file input element
+      setImageFile(null);
+      setImagePreview(null);
+      return;
+    }
     setImageFile(file);
     if (file) {
       const reader = new FileReader();
@@ -214,7 +221,7 @@ export default function TechStackManager({ initialTechStack }: TechStackManagerP
                               alt={tech.name}
                               fill
                               sizes="32px"
-                              className="object-contain p-1.5 grayscale"
+                              className="object-contain p-1.5"
                             />
                           </div>
                         ) : (
@@ -358,7 +365,7 @@ export default function TechStackManager({ initialTechStack }: TechStackManagerP
                         Upload Image File
                       </span>
                       <p className="text-[10px] text-zinc-500 mt-1">
-                        SVG, PNG, or JPG (will be converted to black/white)
+                        SVG, PNG, or JPG (maximum 5MB)
                       </p>
                     </div>
 

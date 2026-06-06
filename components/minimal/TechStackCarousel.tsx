@@ -86,7 +86,7 @@ export default function TechStackCarousel() {
                             alt={tech.name}
                             fill
                             sizes="40px"
-                            className="object-contain filter grayscale dark:invert-[0.2]"
+                            className="object-contain"
                           />
                         </div>
                       ) : (
