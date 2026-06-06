@@ -93,11 +93,9 @@ model Certification {
 }
 
 model TechStack {
-  id          String   @id @default(cuid())
-  name        String   @unique
-  category    String
-  iconName    String
-  image       String?  // URL to tech stack icon/image in Supabase Storage
-  proficiency Int?
-  createdAt   DateTime @default(now())
+  id        String   @id @default(cuid())
+  name      String   @unique
+  category  String
+  image     String?  // URL to tech stack icon/image in Supabase Storage
+  createdAt DateTime @default(now())
 }

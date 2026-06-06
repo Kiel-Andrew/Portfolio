@@ -16,9 +16,7 @@ interface TechStackItem {
   id: string;
   name: string;
   category: string;
-  iconName: string;
   image: string | null;
-  proficiency: number | null;
 }
 
 interface TechStackManagerProps {
@@ -112,14 +110,11 @@ export default function TechStackManager({ initialTechStack }: TechStackManagerP
         imageUrl = url;
       }
 
-      const defaultIconName = name.toLowerCase().replace(/\s+/g, "-");
-
       if (editId) {
         // Edit Mode
         const updated = await updateTechStack(editId, {
           name,
           category,
-          iconName: defaultIconName,
           imageUrl,
         });
 
@@ -130,7 +125,6 @@ export default function TechStackManager({ initialTechStack }: TechStackManagerP
                   ...item,
                   name: updated.name,
                   category: updated.category,
-                  iconName: updated.iconName,
                   image: updated.image,
                 }
               : item
@@ -141,9 +135,7 @@ export default function TechStackManager({ initialTechStack }: TechStackManagerP
         const created = await createTechStack({
           name,
           category,
-          iconName: defaultIconName,
           imageUrl,
-          proficiency: undefined,
         });
 
         setTechStack((prev) => [...prev, created]);

@@ -224,18 +224,14 @@ export async function uploadTechStackImage(
 export async function createTechStack(formData: {
   name: string;
   category: string;
-  iconName: string;
   imageUrl?: string;
-  proficiency?: number;
 }) {
   try {
     const tech = await prisma.techStack.create({
       data: {
         name: formData.name,
         category: formData.category,
-        iconName: formData.iconName,
         image: formData.imageUrl,
-        proficiency: formData.proficiency,
       },
     });
     return tech;
@@ -250,9 +246,7 @@ export async function updateTechStack(
   formData: {
     name?: string;
     category?: string;
-    iconName?: string;
     imageUrl?: string;
-    proficiency?: number;
   }
 ) {
   try {
@@ -261,9 +255,7 @@ export async function updateTechStack(
       data: {
         ...(formData.name && { name: formData.name }),
         ...(formData.category && { category: formData.category }),
-        ...(formData.iconName && { iconName: formData.iconName }),
         ...(formData.imageUrl && { image: formData.imageUrl }),
-        ...(formData.proficiency !== undefined && { proficiency: formData.proficiency }),
       },
     });
     return tech;

@@ -8,7 +8,6 @@ interface TechStackItem {
   name: string;
   category: string;
   image?: string | null;
-  proficiency?: number | null;
 }
 
 async function fetchTechStack(): Promise<TechStackItem[]> {
@@ -97,11 +96,6 @@ export default function TechStackCarousel() {
                       <span className="text-xs font-semibold text-zinc-800 dark:text-zinc-200 text-center">
                         {tech.name}
                       </span>
-                      {tech.proficiency && (
-                        <span className="text-[10px] text-zinc-400 dark:text-zinc-500 font-medium">
-                          {tech.proficiency}%
-                        </span>
-                      )}
                     </div>
                   ))}
                 </div>
