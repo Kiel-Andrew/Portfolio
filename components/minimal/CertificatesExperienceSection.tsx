@@ -136,10 +136,20 @@ export default function CertificatesExperienceSection() {
 
           {/* Right Column: Experience (col-span-2) - borderless and flat */}
           <div className="lg:col-span-2 space-y-6">
-            <h2 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2 uppercase tracking-wider">
-              <Briefcase className="w-4 h-4 text-zinc-800 dark:text-zinc-200" />
-              Experience
-            </h2>
+            <div className="flex items-center justify-between">
+              <h2 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 flex items-center gap-2 uppercase tracking-wider">
+                <Briefcase className="w-4 h-4 text-zinc-800 dark:text-zinc-200" />
+                Experience
+              </h2>
+              {experiences.length > 5 && (
+                <button
+                  onClick={() => setIsViewAllOpen(true)}
+                  className="text-[10px] text-zinc-800 dark:text-zinc-200 hover:text-zinc-950 dark:hover:text-white hover:underline font-bold uppercase tracking-wider cursor-pointer"
+                >
+                  View All
+                </button>
+              )}
+            </div>
             
             <div className="space-y-3 divide-y divide-zinc-100 dark:divide-zinc-900">
               {experiences.length === 0 ? (
@@ -163,14 +173,7 @@ export default function CertificatesExperienceSection() {
               )}
             </div>
 
-            {experiences.length > 5 && (
-              <button
-                onClick={() => setIsViewAllOpen(true)}
-                className="mt-4 w-full py-2 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-900 dark:text-zinc-100 font-bold text-xs uppercase tracking-wider transition-colors rounded-none border border-zinc-200 dark:border-zinc-800 cursor-pointer"
-              >
-                View All Experience
-              </button>
-            )}
+
           </div>
 
         </div>
