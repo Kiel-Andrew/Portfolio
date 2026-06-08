@@ -71,12 +71,10 @@ model Experience {
   id          String   @id @default(cuid())
   company     String
   role        String
-  location    String?
   startDate   DateTime
   endDate     DateTime?
   current     Boolean  @default(false)
   description String
-  skillsUsed  String[]
   createdAt   DateTime @default(now())
 }
 

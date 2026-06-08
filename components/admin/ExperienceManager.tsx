@@ -14,12 +14,10 @@ interface ExperienceItem {
   id: string;
   company: string;
   role: string;
-  location: string | null;
   startDate: Date | string;
   endDate: Date | string | null;
   current: boolean;
   description: string;
-  skillsUsed: string[];
 }
 
 interface ExperienceManagerProps {
@@ -134,8 +132,6 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
         endDate: parsedEndDate,
         current,
         description: description.trim(),
-        skillsUsed: [] as string[],
-        location: "",
       };
 
       if (editId) {

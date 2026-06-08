@@ -46,7 +46,6 @@ export default async function MaximizedExperience() {
                   </h3>
                   <p className="text-sm font-medium text-zinc-400">
                     {exp.company}
-                    {exp.location && ` • ${exp.location}`}
                   </p>
                 </div>
                 <div className="text-sm text-zinc-500 whitespace-nowrap">
@@ -57,19 +56,6 @@ export default async function MaximizedExperience() {
               <p className="mt-4 text-zinc-300 leading-relaxed">
                 {exp.description}
               </p>
-
-              {exp.skillsUsed.length > 0 && (
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {exp.skillsUsed.map((skill) => (
-                    <span
-                      key={skill}
-                      className="text-xs font-medium text-zinc-300 bg-zinc-700/50 px-3 py-1.5 rounded-full"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              )}
             </div>
           ))}
         </div>

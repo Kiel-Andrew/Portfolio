@@ -56,7 +56,6 @@ export default async function ExperiencePage() {
                     </h3>
                     <p className="text-sm font-medium text-zinc-600">
                       {exp.company}
-                      {exp.location && ` • ${exp.location}`}
                     </p>
                     <p className="text-xs text-zinc-500">
                       {formatDate(exp.startDate)} —{" "}
@@ -66,18 +65,6 @@ export default async function ExperiencePage() {
                   <p className="mt-3 text-sm text-zinc-600 leading-relaxed">
                     {exp.description}
                   </p>
-                  {exp.skillsUsed.length > 0 && (
-                    <div className="mt-3 flex flex-wrap gap-2">
-                      {exp.skillsUsed.slice(0, 5).map((skill) => (
-                        <span
-                          key={skill}
-                          className="inline-flex text-xs font-medium text-zinc-600 bg-zinc-100 px-2 py-1 rounded"
-                        >
-                          {skill}
-                        </span>
-                      ))}
-                    </div>
-                  )}
                 </div>
               </div>
             </div>
