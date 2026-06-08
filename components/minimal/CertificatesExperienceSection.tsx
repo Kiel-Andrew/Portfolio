@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ExternalLink, Briefcase, Award } from "lucide-react";
+import { ExternalLink, Briefcase, Award, X } from "lucide-react";
 
 interface Certificate {
   id: string;
@@ -44,6 +44,7 @@ export default function CertificatesExperienceSection() {
   const [certificates, setCertificates] = useState<Certificate[]>([]);
   const [experiences, setExperiences] = useState<Experience[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isViewAllOpen, setIsViewAllOpen] = useState(false);
 
   useEffect(() => {
     Promise.all([
@@ -71,6 +72,22 @@ export default function CertificatesExperienceSection() {
       </section>
     );
   }
+
+  // Sort experiences descending by end date, then start date descending
+  const sortedExperiences = [...experiences].sort((a, b) => {
+    const getSortDateVal = (exp: Experience) => {
+      if (exp.current || (exp.dateFormat === "RANGE" && !exp.endDate)) {
+        return new Date(8640000000000000).getTime();
+      }
+      return exp.endDate ? new Date(exp.endDate).getTime() : new Date(exp.startDate).getTime();
+    };
+    const dateA = getSortDateVal(a);
+    const dateB = getSortDateVal(b);
+    if (dateB !== dateA) return dateB - dateA;
+    return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
+  });
+
+  const displayedExperiences = sortedExperiences.slice(0, 5);
 
   return (
     <section className="py-2 bg-white dark:bg-zinc-950 transition-colors duration-300">
@@ -124,44 +141,80 @@ export default function CertificatesExperienceSection() {
               Experience
             </h2>
             
-            <div className="space-y-6 divide-y divide-zinc-100 dark:divide-zinc-900">
+            <div className="space-y-3 divide-y divide-zinc-100 dark:divide-zinc-900">
               {experiences.length === 0 ? (
                 <p className="text-xs text-zinc-400">No experience added yet.</p>
               ) : (
-                [...experiences]
-                  .sort((a, b) => {
-                    const getSortDateVal = (exp: Experience) => {
-                      if (exp.current || (exp.dateFormat === "RANGE" && !exp.endDate)) {
-                        return new Date(8640000000000000).getTime();
-                      }
-                      return exp.endDate ? new Date(exp.endDate).getTime() : new Date(exp.startDate).getTime();
-                    };
-                    const dateA = getSortDateVal(a);
-                    const dateB = getSortDateVal(b);
-                    if (dateB !== dateA) return dateB - dateA;
-                    return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
-                  })
-                  .map((exp, index) => (
-                    <div key={exp.id} className={`${index > 0 ? "pt-5" : ""} space-y-1.5`}>
-                      <h3 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200">
-                        {exp.title}
-                      </h3>
-                      <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
-                        {exp.description}
-                      </p>
-                      <p className="text-[10px] text-zinc-400">
-                        {exp.dateFormat === "SINGLE"
-                          ? formatDate(exp.startDate)
-                          : `${formatDate(exp.startDate)} — ${exp.current || !exp.endDate ? "Present" : formatDate(exp.endDate)}`}
-                      </p>
-                    </div>
-                  ))
+                displayedExperiences.map((exp, index) => (
+                  <div key={exp.id} className={`${index > 0 ? "pt-3" : ""} space-y-1`}>
+                    <h3 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200">
+                      {exp.title}
+                    </h3>
+                    <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
+                      {exp.description}
+                    </p>
+                    <p className="text-[10px] text-zinc-400">
+                      {exp.dateFormat === "SINGLE"
+                        ? formatDate(exp.startDate)
+                        : `${formatDate(exp.startDate)} — ${exp.current || !exp.endDate ? "Present" : formatDate(exp.endDate)}`}
+                    </p>
+                  </div>
+                ))
               )}
             </div>
+
+            {experiences.length > 5 && (
+              <button
+                onClick={() => setIsViewAllOpen(true)}
+                className="mt-4 w-full py-2 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-900 dark:text-zinc-100 font-bold text-xs uppercase tracking-wider transition-colors rounded-none border border-zinc-200 dark:border-zinc-800 cursor-pointer"
+              >
+                View All Experience
+              </button>
+            )}
           </div>
 
         </div>
       </div>
+
+      {/* Pop Frame Modal - View All Experiences */}
+      {isViewAllOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white dark:bg-zinc-950 rounded-none max-w-2xl w-full max-h-[85vh] overflow-y-auto shadow-2xl border border-zinc-200 dark:border-zinc-800 flex flex-col">
+            {/* Header */}
+            <div className="sticky top-0 z-10 flex items-center justify-between p-5 border-b border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-950">
+              <h2 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider flex items-center gap-2">
+                <Briefcase className="w-4 h-4 text-zinc-800 dark:text-zinc-200" />
+                All Experience
+              </h2>
+              <button
+                onClick={() => setIsViewAllOpen(false)}
+                className="p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-900 rounded-none transition-colors cursor-pointer"
+              >
+                <X className="w-4 h-4 text-zinc-800 dark:text-zinc-200" />
+              </button>
+            </div>
+
+            {/* Scrollable Content */}
+            <div className="p-6 overflow-y-auto space-y-3 divide-y divide-zinc-100 dark:divide-zinc-900">
+              {sortedExperiences.map((exp, index) => (
+                <div key={exp.id} className={`${index > 0 ? "pt-3" : ""} space-y-1`}>
+                  <h3 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200">
+                    {exp.title}
+                  </h3>
+                  <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
+                    {exp.description}
+                  </p>
+                  <p className="text-[10px] text-zinc-400">
+                    {exp.dateFormat === "SINGLE"
+                      ? formatDate(exp.startDate)
+                      : `${formatDate(exp.startDate)} — ${exp.current || !exp.endDate ? "Present" : formatDate(exp.endDate)}`}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </section>
   );
 }
