@@ -18,7 +18,7 @@ export default function FooterSection() {
             </h3>
             <div className="grid grid-cols-3 gap-2.5 w-full">
               <a
-                href="https://linkedin.com"
+                href="linkedin.com/in/kiel-andrew-esta"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex w-full items-center justify-center gap-1.5 px-4 py-2 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 rounded-none hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors font-bold text-xs shadow-sm text-center"
@@ -27,7 +27,7 @@ export default function FooterSection() {
                 <span className="truncate">LinkedIn</span>
               </a>
               <a
-                href="https://github.com"
+                href="https://github.com/Kiel-Andrew"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex w-full items-center justify-center gap-1.5 px-4 py-2 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 rounded-none hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors font-bold text-xs shadow-sm text-center"
@@ -36,7 +36,7 @@ export default function FooterSection() {
                 <span className="truncate">GitHub</span>
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/_kiyell/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex w-full items-center justify-center gap-1.5 px-4 py-2 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 rounded-none hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors font-bold text-xs shadow-sm text-center"
