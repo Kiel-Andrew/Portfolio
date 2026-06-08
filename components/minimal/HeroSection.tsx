@@ -22,7 +22,7 @@ export default function HeroSection() {
       <div className="mx-auto max-w-6xl px-8 sm:px-16 md:px-24 lg:px-32">
         {/* 30/70 Ratio Flex Grid */}
         <div className="flex flex-col md:flex-row gap-8 items-start">
-          
+
           {/* Left Column (30%): Sharp Rectangular Portrait Image */}
           <div className="relative z-10 w-full md:w-[30%] shrink-0">
             <div className="relative w-full aspect-[3/4] overflow-hidden">
@@ -39,7 +39,7 @@ export default function HeroSection() {
 
           {/* Right Column (70%): Details, Bio, Control Switches & Contacts */}
           <div className="relative z-10 w-full md:w-[70%] space-y-6">
-            
+
             {/* Header Details + Switches Row */}
             <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6">
               <div className="space-y-1.5">
@@ -66,9 +66,8 @@ export default function HeroSection() {
                   aria-label="Toggle theme"
                 >
                   <span
-                    className={`${
-                      isDark ? "translate-x-6 bg-zinc-950" : "translate-x-0 bg-white"
-                    } pointer-events-none flex h-7 w-7 transform items-center justify-center rounded-none shadow-lg ring-0 transition duration-200 ease-in-out`}
+                    className={`${isDark ? "translate-x-6 bg-zinc-950" : "translate-x-0 bg-white"
+                      } pointer-events-none flex h-7 w-7 transform items-center justify-center rounded-none shadow-lg ring-0 transition duration-200 ease-in-out`}
                   >
                     {!mounted ? (
                       <div className="w-4 h-4" />
@@ -85,7 +84,7 @@ export default function HeroSection() {
             {/* One-liner Biography - Exactly matching requested theme */}
             <div className="space-y-3">
               <p className="text-sm sm:text-base text-zinc-800 dark:text-zinc-200 leading-relaxed font-normal">
-                My work focuses on the combination of sleek design and functionality. The projects I make not only follow the principles of design, but also meet the needs of my clients.
+                Let’s build something beautiful that actually works. I combine clean, modern design with dependable functionality to create digital experiences tailored exactly to your business goals. Ready to elevate your project? Let’s talk!
               </p>
             </div>
 
