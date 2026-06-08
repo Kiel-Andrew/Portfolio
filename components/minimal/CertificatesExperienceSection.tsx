@@ -23,10 +23,18 @@ interface Experience {
 
 function formatDate(dateString: string): string {
   try {
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return dateString;
+    // Check if it is Jan 1st UTC (often used for year-only inputs)
+    const isJanFirst = date.getUTCMonth() === 0 && date.getUTCDate() === 1;
+    if (isJanFirst) {
+      return date.getUTCFullYear().toString();
+    }
     return new Intl.DateTimeFormat("en-US", {
       year: "numeric",
       month: "short",
-    }).format(new Date(dateString));
+      timeZone: "UTC"
+    }).format(date);
   } catch (e) {
     return dateString;
   }
@@ -120,29 +128,31 @@ export default function CertificatesExperienceSection() {
               {experiences.length === 0 ? (
                 <p className="text-xs text-zinc-400">No experience added yet.</p>
               ) : (
-                experiences.map((exp, index) => (
-                  <div key={exp.id} className={`${index > 0 ? "pt-5" : ""} space-y-1.5`}>
-                    <div className="flex items-start justify-between gap-4">
-                      <div>
-                        <h3 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200">
-                          {exp.role}
-                        </h3>
-                        <p className="text-[11px] text-zinc-500 dark:text-zinc-400 font-semibold">
-                          {exp.company}
-                        </p>
+                [...experiences]
+                  .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime())
+                  .map((exp, index) => (
+                    <div key={exp.id} className={`${index > 0 ? "pt-5" : ""} space-y-1.5`}>
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <h3 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200">
+                            {exp.role}
+                          </h3>
+                          <p className="text-[11px] text-zinc-500 dark:text-zinc-400 font-semibold">
+                            {exp.company}
+                          </p>
+                        </div>
+                        <span className="text-[10px] px-2.5 py-0.5 bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 font-bold rounded-none">
+                          {exp.current ? "Current" : "Past"}
+                        </span>
                       </div>
-                      <span className="text-[10px] px-2.5 py-0.5 bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 font-bold rounded-none">
-                        {exp.current ? "Current" : "Past"}
-                      </span>
+                      <p className="text-[10px] text-zinc-400">
+                        {formatDate(exp.startDate)} — {exp.endDate ? formatDate(exp.endDate) : "Present"}
+                      </p>
+                      <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
+                        {exp.description}
+                      </p>
                     </div>
-                    <p className="text-[10px] text-zinc-400">
-                      {formatDate(exp.startDate)} — {exp.endDate ? formatDate(exp.endDate) : "Present"}
-                    </p>
-                    <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
-                      {exp.description}
-                    </p>
-                  </div>
-                ))
+                  ))
               )}
             </div>
           </div>

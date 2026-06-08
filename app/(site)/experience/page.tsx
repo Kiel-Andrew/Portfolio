@@ -7,9 +7,14 @@ export const metadata = {
 };
 
 function formatDate(date: Date): string {
+  const isJanFirst = date.getUTCMonth() === 0 && date.getUTCDate() === 1;
+  if (isJanFirst) {
+    return date.getUTCFullYear().toString();
+  }
   return new Intl.DateTimeFormat("en-US", {
     month: "short",
     year: "numeric",
+    timeZone: "UTC"
   }).format(date);
 }
 

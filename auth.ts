@@ -33,6 +33,6 @@ export const authOptions: NextAuthOptions = {
   },
   session: {
     strategy: "jwt", // Use JWT session strategy for stateless Next.js middleware protection
-    maxAge: 15 * 60, // 15 minutes session duration (clears credentials quickly after closing or inactivity)
+    maxAge: 24 * 60 * 60, // 1 day session duration
   },
 };
