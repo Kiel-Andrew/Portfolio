@@ -23,7 +23,7 @@ interface TechStackManagerProps {
   initialTechStack: TechStackItem[];
 }
 
-const categories = ["Frontend", "Backend", "Design", "Tools"];
+const categories = ["Development", "Database", "Design", "Tools"];
 
 export default function TechStackManager({ initialTechStack }: TechStackManagerProps) {
   const [techStack, setTechStack] = useState<TechStackItem[]>(initialTechStack);
@@ -33,7 +33,7 @@ export default function TechStackManager({ initialTechStack }: TechStackManagerP
   // Form State
   const [editId, setEditId] = useState<string | null>(null);
   const [name, setName] = useState("");
-  const [category, setCategory] = useState("Frontend");
+  const [category, setCategory] = useState("Development");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
@@ -50,7 +50,7 @@ export default function TechStackManager({ initialTechStack }: TechStackManagerP
   function openAddModal() {
     setEditId(null);
     setName("");
-    setCategory("Frontend");
+    setCategory("Development");
     setImageFile(null);
     setImagePreview(null);
     setIsModalOpen(true);
