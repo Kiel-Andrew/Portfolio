@@ -89,9 +89,10 @@ export async function deleteProject(id: string) {
 export async function createExperience(formData: {
   title: string;
   startDate: Date;
-  endDate?: Date;
+  endDate?: Date | null;
   current: boolean;
   description: string;
+  dateFormat: string;
 }) {
   try {
     const experience = await prisma.experience.create({

@@ -19,8 +19,18 @@ function formatDate(date: Date): string {
 }
 
 export default async function ExperiencePage() {
-  const experiences = await prisma.experience.findMany({
-    orderBy: { startDate: "desc" },
+  const rawExperiences = await prisma.experience.findMany();
+  const experiences = [...rawExperiences].sort((a, b) => {
+    const getSortDateVal = (exp: typeof a) => {
+      if (exp.current || (exp.dateFormat === "RANGE" && !exp.endDate)) {
+        return new Date(8640000000000000).getTime();
+      }
+      return exp.endDate ? new Date(exp.endDate).getTime() : new Date(exp.startDate).getTime();
+    };
+    const dateA = getSortDateVal(a);
+    const dateB = getSortDateVal(b);
+    if (dateB !== dateA) return dateB - dateA;
+    return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
   });
 
   return (
@@ -54,14 +64,15 @@ export default async function ExperiencePage() {
                     <h3 className="text-lg font-semibold text-zinc-950">
                       {exp.title}
                     </h3>
-                    <p className="text-xs text-zinc-500">
-                      {formatDate(exp.startDate)} —{" "}
-                      {exp.current ? "Present" : formatDate(exp.endDate!)}
+                    <p className="text-sm text-zinc-600 leading-relaxed pt-1">
+                      {exp.description}
+                    </p>
+                    <p className="text-xs text-zinc-500 pt-1">
+                      {exp.dateFormat === "SINGLE"
+                        ? formatDate(exp.startDate)
+                        : `${formatDate(exp.startDate)} — ${exp.current || !exp.endDate ? "Present" : formatDate(exp.endDate)}`}
                     </p>
                   </div>
-                  <p className="mt-3 text-sm text-zinc-600 leading-relaxed">
-                    {exp.description}
-                  </p>
                 </div>
               </div>
             </div>

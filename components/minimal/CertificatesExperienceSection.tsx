@@ -17,6 +17,7 @@ interface Experience {
   startDate: string;
   endDate?: string;
   current: boolean;
+  dateFormat?: string;
   description: string;
 }
 
@@ -128,24 +129,30 @@ export default function CertificatesExperienceSection() {
                 <p className="text-xs text-zinc-400">No experience added yet.</p>
               ) : (
                 [...experiences]
-                  .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime())
+                  .sort((a, b) => {
+                    const getSortDateVal = (exp: Experience) => {
+                      if (exp.current || (exp.dateFormat === "RANGE" && !exp.endDate)) {
+                        return new Date(8640000000000000).getTime();
+                      }
+                      return exp.endDate ? new Date(exp.endDate).getTime() : new Date(exp.startDate).getTime();
+                    };
+                    const dateA = getSortDateVal(a);
+                    const dateB = getSortDateVal(b);
+                    if (dateB !== dateA) return dateB - dateA;
+                    return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
+                  })
                   .map((exp, index) => (
                     <div key={exp.id} className={`${index > 0 ? "pt-5" : ""} space-y-1.5`}>
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <h3 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200">
-                            {exp.title}
-                          </h3>
-                        </div>
-                        <span className="text-[10px] px-2.5 py-0.5 bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 font-bold rounded-none">
-                          {exp.current ? "Current" : "Past"}
-                        </span>
-                      </div>
-                      <p className="text-[10px] text-zinc-400">
-                        {formatDate(exp.startDate)} — {exp.endDate ? formatDate(exp.endDate) : "Present"}
-                      </p>
+                      <h3 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200">
+                        {exp.title}
+                      </h3>
                       <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
                         {exp.description}
+                      </p>
+                      <p className="text-[10px] text-zinc-400">
+                        {exp.dateFormat === "SINGLE"
+                          ? formatDate(exp.startDate)
+                          : `${formatDate(exp.startDate)} — ${exp.current || !exp.endDate ? "Present" : formatDate(exp.endDate)}`}
                       </p>
                     </div>
                   ))

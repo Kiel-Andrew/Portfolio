@@ -15,8 +15,18 @@ function formatDate(date: Date): string {
 }
 
 export default async function MaximizedExperience() {
-  const experiences = await prisma.experience.findMany({
-    orderBy: { startDate: "desc" },
+  const rawExperiences = await prisma.experience.findMany();
+  const experiences = [...rawExperiences].sort((a, b) => {
+    const getSortDateVal = (exp: typeof a) => {
+      if (exp.current || (exp.dateFormat === "RANGE" && !exp.endDate)) {
+        return new Date(8640000000000000).getTime();
+      }
+      return exp.endDate ? new Date(exp.endDate).getTime() : new Date(exp.startDate).getTime();
+    };
+    const dateA = getSortDateVal(a);
+    const dateB = getSortDateVal(b);
+    if (dateB !== dateA) return dateB - dateA;
+    return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
   });
 
   return (
@@ -29,7 +39,7 @@ export default async function MaximizedExperience() {
       </div>
 
       {experiences.length === 0 ? (
-        <div className="rounded-xl border border-zinc-700 bg-zinc-800/40 p-12 text-center">
+        <div className="rounded-none border border-zinc-700 bg-zinc-800/40 p-12 text-center">
           <p className="text-zinc-400">No experience entries yet.</p>
         </div>
       ) : (
@@ -37,22 +47,19 @@ export default async function MaximizedExperience() {
           {experiences.map((exp) => (
             <div
               key={exp.id}
-              className="rounded-xl border border-zinc-700 bg-zinc-800/40 p-8 hover:border-zinc-600 transition"
+              className="rounded-none border border-zinc-700 bg-zinc-800/40 p-8 hover:border-zinc-600 transition space-y-4"
             >
-              <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-                <div className="flex-1 space-y-2">
-                  <h3 className="text-xl font-semibold text-zinc-100">
-                    {exp.title}
-                  </h3>
-                </div>
-                <div className="text-sm text-zinc-500 whitespace-nowrap">
-                  {formatDate(exp.startDate)} — {exp.current ? "Present" : formatDate(exp.endDate!)}
-                </div>
-              </div>
-
-              <p className="mt-4 text-zinc-300 leading-relaxed">
+              <h3 className="text-xl font-semibold text-zinc-100">
+                {exp.title}
+              </h3>
+              <p className="text-zinc-300 leading-relaxed">
                 {exp.description}
               </p>
+              <div className="text-sm text-zinc-500">
+                {exp.dateFormat === "SINGLE"
+                  ? formatDate(exp.startDate)
+                  : `${formatDate(exp.startDate)} — ${exp.current || !exp.endDate ? "Present" : formatDate(exp.endDate)}`}
+              </div>
             </div>
           ))}
         </div>

@@ -16,6 +16,7 @@ interface ExperienceItem {
   startDate: Date | string;
   endDate: Date | string | null;
   current: boolean;
+  dateFormat: string;
   description: string;
 }
 
@@ -72,17 +73,17 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
   // Form State
   const [editId, setEditId] = useState<string | null>(null);
   const [title, setTitle] = useState("");
+  const [dateFormat, setDateFormat] = useState<"RANGE" | "SINGLE">("RANGE");
   const [startDateStr, setStartDateStr] = useState("");
   const [endDateStr, setEndDateStr] = useState("");
-  const [current, setCurrent] = useState(false);
   const [description, setDescription] = useState("");
 
   function openAddModal() {
     setEditId(null);
     setTitle("");
+    setDateFormat("RANGE");
     setStartDateStr("");
     setEndDateStr("");
-    setCurrent(false);
     setDescription("");
     setIsModalOpen(true);
   }
@@ -90,9 +91,9 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
   function openEditModal(exp: ExperienceItem) {
     setEditId(exp.id);
     setTitle(exp.title);
+    setDateFormat((exp.dateFormat as "RANGE" | "SINGLE") || "RANGE");
     setStartDateStr(getEditDateString(exp.startDate));
     setEndDateStr(exp.endDate ? getEditDateString(exp.endDate) : "");
-    setCurrent(exp.current);
     setDescription(exp.description);
     setIsModalOpen(true);
   }
@@ -112,20 +113,37 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!title.trim() || !startDateStr.trim() || !description.trim()) {
-      alert("Please fill in all required fields (Title, Start Date, and Description).");
+      alert("Please fill in all required fields.");
       return;
     }
 
     setLoading(true);
     try {
       const parsedStartDate = parseDateInput(startDateStr);
-      const parsedEndDate = !current && endDateStr.trim() ? parseDateInput(endDateStr) : null;
+      const isRange = dateFormat === "RANGE";
+      
+      let parsedEndDate: Date | null = null;
+      let currentVal = false;
+      
+      if (isRange) {
+        if (endDateStr.trim()) {
+          parsedEndDate = parseDateInput(endDateStr);
+          currentVal = false;
+        } else {
+          parsedEndDate = null;
+          currentVal = true;
+        }
+      } else {
+        parsedEndDate = null;
+        currentVal = false;
+      }
 
       const payload = {
         title: title.trim(),
         startDate: parsedStartDate,
         endDate: parsedEndDate,
-        current,
+        current: currentVal,
+        dateFormat,
         description: description.trim(),
       };
 
@@ -150,8 +168,17 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
     }
   }
 
-  // Sort experiences by startDate descending for display in admin
+  // Sort experiences descending by end date, then start date descending
   const sortedExperiences = [...experiences].sort((a, b) => {
+    const getSortDateVal = (exp: ExperienceItem) => {
+      if (exp.current || (exp.dateFormat === "RANGE" && !exp.endDate)) {
+        return new Date(8640000000000000).getTime();
+      }
+      return exp.endDate ? new Date(exp.endDate).getTime() : new Date(exp.startDate).getTime();
+    };
+    const dateA = getSortDateVal(a);
+    const dateB = getSortDateVal(b);
+    if (dateB !== dateA) return dateB - dateA;
     return new Date(b.startDate).getTime() - new Date(a.startDate).getTime();
   });
 
@@ -209,7 +236,9 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
                     {exp.title}
                   </h3>
                   <p className="text-[10px] text-zinc-500 mt-1">
-                    {formatDisplayDate(exp.startDate)} — {exp.current ? "Present" : formatDisplayDate(exp.endDate)}
+                    {exp.dateFormat === "SINGLE"
+                      ? formatDisplayDate(exp.startDate)
+                      : `${formatDisplayDate(exp.startDate)} — ${exp.current ? "Present" : formatDisplayDate(exp.endDate)}`}
                   </p>
                 </div>
               </div>
@@ -290,12 +319,45 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
                   />
                 </div>
 
-                {/* Dates & Present toggle */}
+                {/* Date Format Select */}
+                <div className="space-y-1.5">
+                  <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400">
+                    Date Format *
+                  </label>
+                  <div className="flex gap-4">
+                    <label className="flex items-center gap-2 text-sm text-zinc-300 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="dateFormat"
+                        value="RANGE"
+                        checked={dateFormat === "RANGE"}
+                        onChange={() => setDateFormat("RANGE")}
+                        disabled={loading}
+                        className="accent-zinc-100"
+                      />
+                      From and To (Range)
+                    </label>
+                    <label className="flex items-center gap-2 text-sm text-zinc-300 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="dateFormat"
+                        value="SINGLE"
+                        checked={dateFormat === "SINGLE"}
+                        onChange={() => setDateFormat("SINGLE")}
+                        disabled={loading}
+                        className="accent-zinc-100"
+                      />
+                      Just a Single Year
+                    </label>
+                  </div>
+                </div>
+
+                {/* Dates Input */}
                 <div className="grid grid-cols-2 gap-4">
                   {/* Start Date */}
-                  <div className="space-y-1.5">
+                  <div className="space-y-1.5 col-span-2 sm:col-span-1">
                     <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400">
-                      Date From (Start Date) *
+                      {dateFormat === "SINGLE" ? "Year *" : "Date From (Start Date) *"}
                     </label>
                     <input
                       type="text"
@@ -304,42 +366,26 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
                       required
                       disabled={loading}
                       className="w-full bg-zinc-900 border border-zinc-800 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 rounded-none focus:outline-none focus:border-zinc-600 transition-colors disabled:opacity-50"
-                      placeholder="e.g. 2024 or 2024-05-01"
+                      placeholder={dateFormat === "SINGLE" ? "e.g. 2026" : "e.g. 2024 or 2024-05-01"}
                     />
                   </div>
 
-                  {/* End Date */}
-                  <div className="space-y-1.5">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400">
-                      Date To (End Date)
-                    </label>
-                    <input
-                      type="text"
-                      value={endDateStr}
-                      onChange={(e) => setEndDateStr(e.target.value)}
-                      disabled={loading || current}
-                      className="w-full bg-zinc-900 border border-zinc-800 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 rounded-none focus:outline-none focus:border-zinc-600 transition-colors disabled:opacity-50 disabled:bg-zinc-950 disabled:border-zinc-900 disabled:text-zinc-600"
-                      placeholder={current ? "Present" : "e.g. 2026 or 2026-08-01"}
-                    />
-                  </div>
-                </div>
-
-                {/* Current Checkbox */}
-                <div className="flex items-center gap-2">
-                  <input
-                    type="checkbox"
-                    id="current"
-                    checked={current}
-                    onChange={(e) => {
-                      setCurrent(e.target.checked);
-                      if (e.target.checked) setEndDateStr("");
-                    }}
-                    disabled={loading}
-                    className="accent-zinc-100"
-                  />
-                  <label htmlFor="current" className="text-xs text-zinc-400 cursor-pointer select-none font-semibold uppercase tracking-wider">
-                    I am currently working in this role
-                  </label>
+                  {/* End Date (Only show if RANGE) */}
+                  {dateFormat === "RANGE" && (
+                    <div className="space-y-1.5 col-span-2 sm:col-span-1">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400">
+                        Date To (Leave blank for "Present")
+                      </label>
+                      <input
+                        type="text"
+                        value={endDateStr}
+                        onChange={(e) => setEndDateStr(e.target.value)}
+                        disabled={loading}
+                        className="w-full bg-zinc-900 border border-zinc-800 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 rounded-none focus:outline-none focus:border-zinc-600 transition-colors disabled:opacity-50"
+                        placeholder="e.g. 2026 or leave empty"
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {/* Description */}

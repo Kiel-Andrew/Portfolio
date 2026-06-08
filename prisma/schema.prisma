@@ -74,6 +74,7 @@ model Experience {
   endDate     DateTime?
   current     Boolean  @default(false)
   description String
+  dateFormat  String   @default("RANGE")
   createdAt   DateTime @default(now())
 }
 
