@@ -52,11 +52,8 @@ export default async function ExperiencePage() {
                 <div className="flex-1 pb-6">
                   <div className="space-y-1">
                     <h3 className="text-lg font-semibold text-zinc-950">
-                      {exp.role}
+                      {exp.title}
                     </h3>
-                    <p className="text-sm font-medium text-zinc-600">
-                      {exp.company}
-                    </p>
                     <p className="text-xs text-zinc-500">
                       {formatDate(exp.startDate)} —{" "}
                       {exp.current ? "Present" : formatDate(exp.endDate!)}

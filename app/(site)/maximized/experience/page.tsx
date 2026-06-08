@@ -42,11 +42,8 @@ export default async function MaximizedExperience() {
               <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
                 <div className="flex-1 space-y-2">
                   <h3 className="text-xl font-semibold text-zinc-100">
-                    {exp.role}
+                    {exp.title}
                   </h3>
-                  <p className="text-sm font-medium text-zinc-400">
-                    {exp.company}
-                  </p>
                 </div>
                 <div className="text-sm text-zinc-500 whitespace-nowrap">
                   {formatDate(exp.startDate)} — {exp.current ? "Present" : formatDate(exp.endDate!)}

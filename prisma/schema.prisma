@@ -69,8 +69,7 @@ model Project {
 
 model Experience {
   id          String   @id @default(cuid())
-  company     String
-  role        String
+  title       String
   startDate   DateTime
   endDate     DateTime?
   current     Boolean  @default(false)

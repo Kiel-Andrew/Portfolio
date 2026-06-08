@@ -13,8 +13,7 @@ interface Certificate {
 
 interface Experience {
   id: string;
-  company: string;
-  role: string;
+  title: string;
   startDate: string;
   endDate?: string;
   current: boolean;
@@ -135,11 +134,8 @@ export default function CertificatesExperienceSection() {
                       <div className="flex items-start justify-between gap-4">
                         <div>
                           <h3 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200">
-                            {exp.role}
+                            {exp.title}
                           </h3>
-                          <p className="text-[11px] text-zinc-500 dark:text-zinc-400 font-semibold">
-                            {exp.company}
-                          </p>
                         </div>
                         <span className="text-[10px] px-2.5 py-0.5 bg-zinc-100 dark:bg-zinc-900 text-zinc-600 dark:text-zinc-300 font-bold rounded-none">
                           {exp.current ? "Current" : "Past"}

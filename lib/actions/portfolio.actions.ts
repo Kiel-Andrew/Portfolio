@@ -87,8 +87,7 @@ export async function deleteProject(id: string) {
 }
 
 export async function createExperience(formData: {
-  company: string;
-  role: string;
+  title: string;
   startDate: Date;
   endDate?: Date;
   current: boolean;

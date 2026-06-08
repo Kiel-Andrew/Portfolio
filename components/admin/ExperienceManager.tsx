@@ -12,8 +12,7 @@ import {
 
 interface ExperienceItem {
   id: string;
-  company: string;
-  role: string;
+  title: string;
   startDate: Date | string;
   endDate: Date | string | null;
   current: boolean;
@@ -72,8 +71,7 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
 
   // Form State
   const [editId, setEditId] = useState<string | null>(null);
-  const [role, setRole] = useState("");
-  const [company, setCompany] = useState("");
+  const [title, setTitle] = useState("");
   const [startDateStr, setStartDateStr] = useState("");
   const [endDateStr, setEndDateStr] = useState("");
   const [current, setCurrent] = useState(false);
@@ -81,8 +79,7 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
 
   function openAddModal() {
     setEditId(null);
-    setRole("");
-    setCompany("");
+    setTitle("");
     setStartDateStr("");
     setEndDateStr("");
     setCurrent(false);
@@ -92,8 +89,7 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
 
   function openEditModal(exp: ExperienceItem) {
     setEditId(exp.id);
-    setRole(exp.role);
-    setCompany(exp.company || "");
+    setTitle(exp.title);
     setStartDateStr(getEditDateString(exp.startDate));
     setEndDateStr(exp.endDate ? getEditDateString(exp.endDate) : "");
     setCurrent(exp.current);
@@ -101,8 +97,8 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
     setIsModalOpen(true);
   }
 
-  async function handleDelete(id: string, role: string) {
-    if (!confirm(`Are you sure you want to delete "${role}" experience?`)) return;
+  async function handleDelete(id: string, title: string) {
+    if (!confirm(`Are you sure you want to delete "${title}" experience?`)) return;
 
     try {
       await deleteExperience(id);
@@ -115,8 +111,8 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!role.trim() || !startDateStr.trim() || !description.trim()) {
-      alert("Please fill in all required fields (Role, Start Date, and Description).");
+    if (!title.trim() || !startDateStr.trim() || !description.trim()) {
+      alert("Please fill in all required fields (Title, Start Date, and Description).");
       return;
     }
 
@@ -126,8 +122,7 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
       const parsedEndDate = !current && endDateStr.trim() ? parseDateInput(endDateStr) : null;
 
       const payload = {
-        role: role.trim(),
-        company: company.trim() || "Independent",
+        title: title.trim(),
         startDate: parsedStartDate,
         endDate: parsedEndDate,
         current,
@@ -180,7 +175,7 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
               Experience
             </h1>
             <p className="text-xs sm:text-sm text-zinc-400">
-              Manage your professional roles, timeline, and descriptions
+              Manage your professional titles, timeline, and descriptions
             </p>
           </div>
           <button
@@ -211,11 +206,8 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
                 </div>
                 <div className="min-w-0">
                   <h3 className="text-sm font-bold text-zinc-100 truncate">
-                    {exp.role}
+                    {exp.title}
                   </h3>
-                  <p className="text-xs text-zinc-400 font-semibold truncate">
-                    {exp.company}
-                  </p>
                   <p className="text-[10px] text-zinc-500 mt-1">
                     {formatDisplayDate(exp.startDate)} — {exp.current ? "Present" : formatDisplayDate(exp.endDate)}
                   </p>
@@ -232,7 +224,7 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
                   <Edit2 className="w-3.5 h-3.5" />
                 </button>
                 <button
-                  onClick={() => handleDelete(exp.id, exp.role)}
+                  onClick={() => handleDelete(exp.id, exp.title)}
                   className="p-1.5 border border-zinc-800 hover:border-red-900 hover:bg-red-950/20 text-zinc-500 hover:text-red-400 transition-colors rounded-none"
                   aria-label="Delete experience"
                 >
@@ -282,34 +274,19 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
 
               {/* Form */}
               <form onSubmit={handleSubmit} className="space-y-4">
-                {/* Title / Role */}
+                {/* Title */}
                 <div className="space-y-1.5">
                   <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400">
-                    Role / Title *
+                    Title *
                   </label>
                   <input
                     type="text"
-                    value={role}
-                    onChange={(e) => setRole(e.target.value)}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                     required
                     disabled={loading}
                     className="w-full bg-zinc-900 border border-zinc-800 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 rounded-none focus:outline-none focus:border-zinc-600 transition-colors disabled:opacity-50"
-                    placeholder="e.g. Lead Full-Stack Developer"
-                  />
-                </div>
-
-                {/* Company */}
-                <div className="space-y-1.5">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-zinc-400">
-                    Company Name
-                  </label>
-                  <input
-                    type="text"
-                    value={company}
-                    onChange={(e) => setCompany(e.target.value)}
-                    disabled={loading}
-                    className="w-full bg-zinc-900 border border-zinc-800 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 rounded-none focus:outline-none focus:border-zinc-600 transition-colors disabled:opacity-50"
-                    placeholder="e.g. Google, Stripe, Freelance (default: Independent)"
+                    placeholder="e.g. Lead Full-Stack Developer at Google"
                   />
                 </div>
 
@@ -393,7 +370,7 @@ export default function ExperienceManager({ initialExperiences }: ExperienceMana
                   </button>
                   <button
                     type="submit"
-                    disabled={loading || !role.trim() || !startDateStr.trim() || !description.trim()}
+                    disabled={loading || !title.trim() || !startDateStr.trim() || !description.trim()}
                     className="flex-1 px-4 py-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-950 font-bold text-xs rounded-none transition-colors disabled:opacity-50 shadow-sm"
                   >
                     {loading ? "Saving..." : editId ? "Save Changes" : "Create Experience"}
