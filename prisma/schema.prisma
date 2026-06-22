@@ -55,10 +55,12 @@ model VerificationToken {
 model Project {
   id          String   @id @default(cuid())
   title       String
-  slug        String   @unique
   description String
   content     String?
   coverImage  String
+  images      String[]
+  videos      String[]
+  role        String?
   liveUrl     String?
   githubUrl   String?
   featured    Boolean  @default(false)

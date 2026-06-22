@@ -12,6 +12,9 @@ interface Project {
   tags: string[];
   liveUrl?: string;
   githubUrl?: string;
+  images?: string[];
+  videos?: string[];
+  role?: string;
 }
 
 export default function ProjectsSection() {
@@ -75,13 +78,13 @@ export default function ProjectsSection() {
                   </div>
                   
                   <div className="space-y-1.5">
-                    <h3 className="text-sm sm:text-base font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors">
+                    <h3 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200 group-hover:text-zinc-600 dark:group-hover:text-zinc-300 transition-colors">
                       {project.title}
                     </h3>
-                    <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal line-clamp-2">
+                    <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal line-clamp-2">
                       {project.description}
                     </p>
-                    <div className="flex gap-2 pt-1 flex-wrap">
+                    <div className="flex gap-2 pt-0.5 flex-wrap">
                       {project.tags.slice(0, 3).map((tag) => (
                         <span
                           key={tag}
@@ -91,6 +94,11 @@ export default function ProjectsSection() {
                         </span>
                       ))}
                     </div>
+                    {project.role && (
+                      <p className="text-[10px] uppercase font-bold tracking-wider text-zinc-400 dark:text-zinc-500">
+                        {project.role}
+                      </p>
+                    )}
                   </div>
                 </div>
               ))}
@@ -119,13 +127,23 @@ export default function ProjectsSection() {
               {/* Cover Image */}
               {selectedProject.coverImage && (
                 <div className="relative w-full aspect-video overflow-hidden rounded-none">
-                  <Image
+                  <img
                     src={selectedProject.coverImage}
                     alt={selectedProject.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 672px"
-                    className="object-cover"
+                    className="object-cover w-full h-full"
                   />
+                </div>
+              )}
+
+              {/* Role */}
+              {selectedProject.role && (
+                <div className="space-y-1.5">
+                  <h3 className="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wider">
+                    Role
+                  </h3>
+                  <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
+                    {selectedProject.role}
+                  </p>
                 </div>
               )}
 
@@ -155,6 +173,46 @@ export default function ProjectsSection() {
                   ))}
                 </div>
               </div>
+
+              {/* Gallery Images */}
+              {selectedProject.images && selectedProject.images.length > 0 && (
+                <div className="space-y-2">
+                  <h3 className="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wider">
+                    Gallery
+                  </h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {selectedProject.images.map((imgUrl, i) => (
+                      <div key={i} className="relative aspect-video w-full overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900">
+                        <img
+                          src={imgUrl}
+                          alt={`${selectedProject.title} gallery image ${i + 1}`}
+                          className="object-cover w-full h-full"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Gallery Videos */}
+              {selectedProject.videos && selectedProject.videos.length > 0 && (
+                <div className="space-y-2">
+                  <h3 className="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wider">
+                    Videos
+                  </h3>
+                  <div className="space-y-4">
+                    {selectedProject.videos.map((vidUrl, i) => (
+                      <div key={i} className="border border-zinc-200 dark:border-zinc-800 bg-black">
+                        <video
+                          src={vidUrl}
+                          controls
+                          className="w-full aspect-video object-contain"
+                        />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Links */}
               <div className="flex gap-3 pt-4 border-t border-zinc-100 dark:border-zinc-800">

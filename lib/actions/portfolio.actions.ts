@@ -27,12 +27,39 @@ export async function uploadProjectCover(
   }
 }
 
+export async function uploadProjectFile(
+  file: File,
+  folder: string
+): Promise<string | null> {
+  try {
+    const timestamp = Date.now();
+    const fileName = `${folder}/${timestamp}-${file.name}`;
+
+    const { error } = await supabase.storage
+      .from("portfolio")
+      .upload(fileName, file);
+
+    if (error) throw error;
+
+    const { data } = supabase.storage
+      .from("portfolio")
+      .getPublicUrl(fileName);
+
+    return data.publicUrl;
+  } catch (error) {
+    console.error(`Upload to ${folder} failed:`, error);
+    return null;
+  }
+}
+
 export async function createProject(formData: {
   title: string;
-  slug: string;
   description: string;
   content?: string;
   coverImageUrl: string;
+  images: string[];
+  videos: string[];
+  role?: string;
   liveUrl?: string;
   githubUrl?: string;
   featured: boolean;
@@ -42,10 +69,12 @@ export async function createProject(formData: {
     const project = await prisma.project.create({
       data: {
         title: formData.title,
-        slug: formData.slug,
         description: formData.description,
         content: formData.content,
         coverImage: formData.coverImageUrl,
+        images: formData.images,
+        videos: formData.videos,
+        role: formData.role,
         liveUrl: formData.liveUrl,
         githubUrl: formData.githubUrl,
         featured: formData.featured,
