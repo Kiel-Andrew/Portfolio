@@ -118,10 +118,6 @@ export default function ProjectForm({ project }: ProjectFormProps) {
         finalCoverUrl = url;
       }
 
-      if (!finalCoverUrl) {
-        throw new Error("Cover image is required");
-      }
-
       // 2. Upload New Gallery Images
       const uploadedImages: string[] = [];
       for (const file of newImageFiles) {
@@ -196,7 +192,6 @@ export default function ProjectForm({ project }: ProjectFormProps) {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          required
           disabled={loading}
           className="w-full bg-zinc-900 border border-zinc-800 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 rounded-none focus:outline-none focus:border-zinc-600 transition-colors disabled:opacity-50"
           placeholder="e.g. Portfolio Website"
@@ -226,7 +221,6 @@ export default function ProjectForm({ project }: ProjectFormProps) {
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          required
           disabled={loading}
           rows={4}
           className="w-full bg-zinc-900 border border-zinc-800 px-3 py-2 text-sm text-zinc-100 placeholder-zinc-600 rounded-none focus:outline-none focus:border-zinc-600 transition-colors disabled:opacity-50 resize-y"
@@ -430,7 +424,7 @@ export default function ProjectForm({ project }: ProjectFormProps) {
 
         <button
           type="submit"
-          disabled={loading || !title.trim() || !description.trim()}
+          disabled={loading}
           className="flex-1 px-4 py-2 bg-zinc-100 hover:bg-zinc-200 text-zinc-950 font-bold text-xs rounded-none transition-colors disabled:opacity-50 shadow-sm text-center"
         >
           {loading ? "Saving..." : project ? "Save Changes" : "Create Project"}

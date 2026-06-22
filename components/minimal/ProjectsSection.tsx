@@ -37,9 +37,25 @@ export default function ProjectsSection() {
 
   if (loading) {
     return (
-      <section className="py-2 bg-white dark:bg-zinc-950">
+      <section className="py-2 bg-white dark:bg-zinc-950 transition-colors duration-300">
         <div className="mx-auto max-w-6xl px-8 sm:px-16 md:px-24 lg:px-32">
-          <p className="text-xs text-zinc-400">Loading projects...</p>
+          <div className="h-4 w-24 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-none mb-8" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {[1, 2].map((i) => (
+              <div key={i} className="space-y-3">
+                <div className="relative w-full aspect-video bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-none" />
+                <div className="space-y-2">
+                  <div className="h-4 w-1/3 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-none" />
+                  <div className="h-3 w-full bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-none" />
+                  <div className="h-3 w-5/6 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-none" />
+                  <div className="flex gap-2 pt-1">
+                    <div className="h-4 w-12 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-none" />
+                    <div className="h-4 w-12 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-none" />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     );

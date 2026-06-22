@@ -40,9 +40,19 @@ export default function TechStackCarousel() {
 
   if (loading) {
     return (
-      <section className="py-4">
+      <section className="py-6 bg-white dark:bg-zinc-950 transition-colors duration-300">
         <div className="mx-auto max-w-6xl px-8 sm:px-16 md:px-24 lg:px-32">
-          <p className="text-sm text-zinc-400">Loading tech stack...</p>
+          <div className="flex gap-4 overflow-hidden py-2">
+            {[1, 2, 3, 4, 5, 6].map((i) => (
+              <div
+                key={i}
+                className="w-28 h-28 border border-zinc-200/55 dark:border-zinc-800/40 bg-zinc-50/20 dark:bg-zinc-900/10 backdrop-blur-md rounded-none shrink-0 animate-pulse flex flex-col items-center justify-between p-3"
+              >
+                <div className="h-3 w-16 bg-zinc-200 dark:bg-zinc-800 rounded-none" />
+                <div className="w-12 h-12 bg-zinc-200 dark:bg-zinc-800 rounded-none" />
+              </div>
+            ))}
+          </div>
         </div>
       </section>
     );
@@ -86,7 +96,7 @@ export default function TechStackCarousel() {
         }
       `}} />
 
-      <div className="w-full">
+      <div className="mx-auto max-w-6xl px-8 sm:px-16 md:px-24 lg:px-32">
         {sortedTechStack.length === 0 ? (
           <div className="text-center py-6">
             <p className="text-xs text-zinc-400">No tech stack items yet.</p>
@@ -94,38 +104,33 @@ export default function TechStackCarousel() {
         ) : (
           <div className="relative w-full flex overflow-x-hidden">
             {/* Left & Right gradient fades for premium look */}
-            <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white dark:from-zinc-950 to-transparent z-10 pointer-events-none" />
-            <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white dark:from-zinc-950 to-transparent z-10 pointer-events-none" />
+            <div className="absolute left-0 top-0 bottom-0 w-12 bg-gradient-to-r from-white dark:from-zinc-950 to-transparent z-10 pointer-events-none" />
+            <div className="absolute right-0 top-0 bottom-0 w-12 bg-gradient-to-l from-white dark:from-zinc-950 to-transparent z-10 pointer-events-none" />
 
             <div className="flex animate-marquee py-2">
               {marqueeItems.map((tech, index) => (
                 <div
                   key={`${tech.id}-${index}`}
-                  className="flex items-center gap-3 w-40 h-20 p-3 border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/40 rounded-none shrink-0 select-none hover:border-zinc-400 dark:hover:border-zinc-600 hover:bg-zinc-100 dark:hover:bg-zinc-900/60 transition-colors duration-200 mr-4"
+                  className="flex flex-col items-center justify-between w-28 h-28 p-3 border border-zinc-200/55 dark:border-zinc-800/40 bg-zinc-50/20 dark:bg-zinc-900/10 backdrop-blur-md rounded-none shrink-0 select-none hover:border-zinc-400 dark:hover:border-zinc-600 hover:bg-zinc-100/30 dark:hover:bg-zinc-900/20 transition-all duration-200 mr-4"
                 >
-                  {/* Left: Image logo container */}
-                  <div className="relative w-12 h-12 shrink-0 bg-white dark:bg-zinc-950/40 flex items-center justify-center overflow-hidden border border-zinc-100 dark:border-zinc-900/60 p-1">
+                  {/* Top: Name */}
+                  <span className="text-xs font-bold text-zinc-800 dark:text-zinc-200 truncate block text-center w-full">
+                    {tech.name}
+                  </span>
+
+                  {/* Bottom: Image container (transparent background) */}
+                  <div className="relative w-12 h-12 shrink-0 bg-transparent flex items-center justify-center overflow-hidden p-0">
                     {tech.image ? (
                       <Image
                         src={tech.image}
                         alt={tech.name}
                         fill
                         sizes="48px"
-                        className="object-contain"
+                        className="object-contain opacity-80 dark:opacity-75 hover:opacity-100 transition-opacity"
                       />
                     ) : (
                       <span className="text-[10px] text-zinc-400 dark:text-zinc-500 font-bold uppercase">Logo</span>
                     )}
-                  </div>
-
-                  {/* Right: Title and Category */}
-                  <div className="flex flex-col justify-center min-w-0">
-                    <span className="text-xs font-bold text-zinc-800 dark:text-zinc-200 truncate block">
-                      {tech.name}
-                    </span>
-                    <span className="text-[9px] text-zinc-400 dark:text-zinc-500 font-bold uppercase tracking-wider truncate block mt-0.5">
-                      {tech.category}
-                    </span>
                   </div>
                 </div>
               ))}

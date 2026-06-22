@@ -65,9 +65,40 @@ export default function CertificatesExperienceSection() {
 
   if (loading) {
     return (
-      <section className="py-12 md:py-16 bg-white dark:bg-zinc-950">
-        <div className="mx-auto max-w-6xl px-6 sm:px-12">
-          <p className="text-xs text-zinc-400">Loading experience & certifications...</p>
+      <section className="py-2 bg-white dark:bg-zinc-950 transition-colors duration-300">
+        <div className="mx-auto max-w-6xl px-8 sm:px-16 md:px-24 lg:px-32">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            
+            {/* Certifications Skeleton */}
+            <div className="lg:col-span-1 space-y-6">
+              <div className="h-4 w-32 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-none" />
+              <div className="space-y-4">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="space-y-2 pt-2">
+                    <div className="h-3 w-2/3 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-none" />
+                    <div className="h-2.5 w-1/2 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-none" />
+                    <div className="h-2 w-1/4 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-none" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Experience Skeleton */}
+            <div className="lg:col-span-2 space-y-6">
+              <div className="h-4 w-32 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-none" />
+              <div className="space-y-4">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="space-y-2 pt-3">
+                    <div className="h-3.5 w-1/3 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-none" />
+                    <div className="h-3 w-full bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-none" />
+                    <div className="h-3 w-5/6 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-none" />
+                    <div className="h-2 w-16 bg-zinc-200 dark:bg-zinc-800 animate-pulse rounded-none" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+          </div>
         </div>
       </section>
     );
