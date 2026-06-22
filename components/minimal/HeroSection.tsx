@@ -51,7 +51,7 @@ export default function HeroSection() {
                   <span>Tanza, Cavite</span>
                 </div>
                 <p className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wide">
-                  UI/UX Designer \ Frontend Developer
+                  UI/UX Designer | Frontend Developer
                 </p>
               </div>
 
