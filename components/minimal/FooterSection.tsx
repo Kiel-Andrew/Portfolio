@@ -1,10 +1,12 @@
 "use client";
 
 import { FiMail, FiLinkedin, FiGithub, FiInstagram } from "react-icons/fi";
+import { useViewStore } from "@/lib/view-store";
 
 export default function FooterSection() {
+  const setComposeOpen = useViewStore((state) => state.setComposeOpen);
   const handleEmail = () => {
-    window.location.href = "mailto:kielesta.gc@gmail.com";
+    setComposeOpen(true);
   };
 
   return (

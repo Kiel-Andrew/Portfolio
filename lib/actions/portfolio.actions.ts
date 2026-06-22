@@ -302,3 +302,70 @@ export async function deleteTechStack(id: string) {
     throw error;
   }
 }
+
+export async function createMessage(formData: {
+  sender: string;
+  subject: string;
+  body: string;
+}) {
+  try {
+    const msg = await prisma.message.create({
+      data: {
+        sender: formData.sender,
+        subject: formData.subject,
+        body: formData.body,
+      },
+    });
+    return msg;
+  } catch (error) {
+    console.error("Failed to create message:", error);
+    throw error;
+  }
+}
+
+export async function markMessageAsRead(id: string) {
+  try {
+    const msg = await prisma.message.update({
+      where: { id },
+      data: { read: true },
+    });
+    return msg;
+  } catch (error) {
+    console.error("Failed to mark message as read:", error);
+    throw error;
+  }
+}
+
+export async function deleteMessage(id: string) {
+  try {
+    await prisma.message.delete({
+      where: { id },
+    });
+  } catch (error) {
+    console.error("Failed to delete message:", error);
+    throw error;
+  }
+}
+
+export async function markMultipleMessagesAsRead(ids: string[]) {
+  try {
+    await prisma.message.updateMany({
+      where: { id: { in: ids } },
+      data: { read: true },
+    });
+  } catch (error) {
+    console.error("Failed to mark multiple messages as read:", error);
+    throw error;
+  }
+}
+
+export async function deleteMultipleMessages(ids: string[]) {
+  try {
+    await prisma.message.deleteMany({
+      where: { id: { in: ids } },
+    });
+  } catch (error) {
+    console.error("Failed to delete multiple messages:", error);
+    throw error;
+  }
+}

@@ -1,7 +1,8 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/auth";
 import { redirect } from "next/navigation";
-import Link from "next/link";
+import SidebarNav from "@/components/admin/SidebarNav";
+import { prisma } from "@/lib/prisma";
 
 export default async function AdminLayout({
   children,
@@ -14,24 +15,20 @@ export default async function AdminLayout({
     redirect("/api/auth/signin");
   }
 
+  // Load unread count from the DB for the sidebar badge
+  const unreadCount = await prisma.message.count({
+    where: { read: false },
+  });
+
   return (
-    <div className="flex min-h-screen flex-col bg-zinc-950 text-zinc-100">
-      <header className="w-full border-b border-zinc-800 bg-zinc-900/60">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
-          <h1 className="text-lg font-semibold text-zinc-100">Admin Panel</h1>
-          <div className="flex items-center gap-4">
-            <span className="text-sm text-zinc-400">{session.user.email}</span>
-            <Link
-              href="/api/auth/signout"
-              className="inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-zinc-100 border border-zinc-700 rounded-lg hover:bg-zinc-800 transition"
-            >
-              Sign Out
-            </Link>
-          </div>
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col lg:flex-row">
+      <SidebarNav email={session.user.email} unreadCount={unreadCount} />
+      
+      {/* Scrollable content area on desktop */}
+      <main className="flex-1 lg:pl-64 min-h-screen flex flex-col">
+        <div className="flex-1 p-6 sm:p-8 md:p-10 max-w-5xl w-full mx-auto">
+          {children}
         </div>
-      </header>
-      <main className="flex-1">
-        <div className="mx-auto w-full max-w-6xl px-6 py-12">{children}</div>
       </main>
     </div>
   );

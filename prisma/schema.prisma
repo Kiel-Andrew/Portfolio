@@ -99,3 +99,12 @@ model TechStack {
   image     String?  // URL to tech stack icon/image in Supabase Storage
   createdAt DateTime @default(now())
 }
+
+model Message {
+  id        String   @id @default(cuid())
+  sender    String
+  subject   String
+  body      String
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}

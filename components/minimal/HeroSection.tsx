@@ -5,9 +5,11 @@ import { Mail, MessageSquare, MapPin, Moon, Sun, BookOpen } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useTheme } from "next-themes";
 import ViewToggle from "@/components/layout/ViewToggle";
+import { useViewStore } from "@/lib/view-store";
 
 export default function HeroSection() {
   const { theme, setTheme, resolvedTheme } = useTheme();
+  const setComposeOpen = useViewStore((state) => state.setComposeOpen);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -94,7 +96,10 @@ export default function HeroSection() {
                 <MessageSquare className="w-3.5 h-3.5" />
                 Chat with Me
               </button>
-              <button className="flex items-center gap-1.5 px-4 py-2 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 rounded-none hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors font-bold text-xs shadow-sm">
+              <button
+                onClick={() => setComposeOpen(true)}
+                className="flex items-center gap-1.5 px-4 py-2 border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 rounded-none hover:bg-zinc-50 dark:hover:bg-zinc-800 transition-colors font-bold text-xs shadow-sm"
+              >
                 <Mail className="w-3.5 h-3.5" />
                 Send Email
               </button>

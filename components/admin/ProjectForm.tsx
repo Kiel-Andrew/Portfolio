@@ -96,6 +96,7 @@ export default function ProjectForm({ project }: ProjectFormProps) {
     setLoading(true);
     try {
       await deleteProject(project.id);
+      alert("Project deleted successfully!");
       router.push("/admin/projects");
       router.refresh();
     } catch (error) {
@@ -156,6 +157,7 @@ export default function ProjectForm({ project }: ProjectFormProps) {
           featured,
           tags,
         });
+        alert("Project updated successfully!");
       } else {
         // Create mode
         await createProject({
@@ -170,6 +172,7 @@ export default function ProjectForm({ project }: ProjectFormProps) {
           featured,
           tags,
         });
+        alert("Project created successfully!");
       }
 
       router.push("/admin/projects");

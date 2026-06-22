@@ -4,6 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import ViewShell from "@/components/layout/ViewShell";
 import ThemeProvider from "@/components/providers/ThemeProvider";
+import ComposeEmailModal from "@/components/minimal/ComposeEmailModal";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body className="min-h-full bg-background text-foreground">
         <ThemeProvider>
           <ViewShell>{children}</ViewShell>
+          <ComposeEmailModal />
         </ThemeProvider>
       </body>
     </html>
