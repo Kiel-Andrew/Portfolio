@@ -64,6 +64,7 @@ model Project {
   liveUrl     String?
   githubUrl   String?
   featured    Boolean  @default(false)
+  order       Int      @default(0)
   tags        String[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

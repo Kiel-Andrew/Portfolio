@@ -369,3 +369,18 @@ export async function deleteMultipleMessages(ids: string[]) {
     throw error;
   }
 }
+
+export async function reorderProjects(ids: string[]) {
+  try {
+    const updates = ids.map((id, index) =>
+      prisma.project.update({
+        where: { id },
+        data: { order: index },
+      })
+    );
+    await prisma.$transaction(updates);
+  } catch (error) {
+    console.error("Failed to reorder projects:", error);
+    throw error;
+  }
+}

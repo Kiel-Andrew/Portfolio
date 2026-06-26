@@ -160,88 +160,95 @@ export default function ProjectsSection() {
               onMouseLeave={() => setIsHovered(false)}
             >
               {/* Carousel Viewport */}
-              <div className="w-full overflow-hidden py-4 flex items-center">
-                <div
-                  className="flex items-center gap-6 transition-transform duration-500 ease-out"
-                  style={{
-                    width: `${projects.length * (cardWidth + 24)}px`,
-                    transform: `translateX(calc(50% - ${activeIndex} * (${cardWidth}px + 24px) - ${cardWidth / 2}px))`,
-                  }}
-                >
-                  {projects.map((project, index) => {
-                    const isActive = index === activeIndex;
-                    const isLeft = projects.length >= 3 && index === (activeIndex - 1 + projects.length) % projects.length;
-                    const isRight = index === (activeIndex + 1) % projects.length;
+              <div className="relative w-full overflow-hidden h-[340px] xs:h-[360px] sm:h-[440px] md:h-[480px] lg:h-[500px] py-4">
+                {projects.map((project, index) => {
+                  const isActive = index === activeIndex;
+                  const isLeft =
+                    (projects.length >= 3 && index === (activeIndex - 1 + projects.length) % projects.length) ||
+                    (projects.length === 2 && activeIndex === 1 && index === 0);
+                  const isRight =
+                    (projects.length >= 3 && index === (activeIndex + 1) % projects.length) ||
+                    (projects.length === 2 && activeIndex === 0 && index === 1);
 
-                    let cardClass = "transition-all duration-500 ease-in-out shrink-0 relative ";
-                    if (isActive) {
-                      cardClass += "scale-100 opacity-100 z-10 cursor-pointer";
-                    } else if (isLeft || isRight) {
-                      cardClass += "scale-90 opacity-30 z-0 cursor-pointer hidden sm:block";
-                    } else {
-                      cardClass += "scale-75 opacity-0 z-0 pointer-events-none hidden sm:block";
-                    }
+                  let cardClass = "absolute top-4 left-1/2 transition-all duration-500 ease-in-out group space-y-3 ";
+                  let transformStyle = "";
 
-                    return (
-                      <div
-                        key={project.id}
-                        onClick={() => handleCardClick(project, index)}
-                        className={`${cardClass} group space-y-3`}
-                        style={{ width: `${cardWidth}px` }}
-                      >
-                        <div className="relative w-full aspect-video overflow-hidden rounded-none bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
-                          {project.coverImage && (
-                            <Image
-                              src={project.coverImage}
-                              alt={project.title}
-                              fill
-                              sizes="(max-width: 768px) 100vw, 50vw"
-                              className="object-cover"
-                            />
-                          )}
+                  if (isActive) {
+                    cardClass += "opacity-100 z-10 cursor-pointer";
+                    transformStyle = "translateX(-50%) scale(1)";
+                  } else if (isLeft) {
+                    cardClass += "opacity-30 z-0 cursor-pointer hidden sm:block";
+                    transformStyle = "translateX(-155%) scale(0.9)";
+                  } else if (isRight) {
+                    cardClass += "opacity-30 z-0 cursor-pointer hidden sm:block";
+                    transformStyle = "translateX(55%) scale(0.9)";
+                  } else {
+                    cardClass += "opacity-0 z-0 pointer-events-none hidden sm:block";
+                    transformStyle = "translateX(-50%) scale(0.75)";
+                  }
 
-                          {/* Yellow Star Overlay for Featured projects */}
-                          {project.featured && (
-                            <div 
-                              className="absolute top-2 right-2 bg-yellow-400 text-zinc-950 p-1 shadow-sm flex items-center justify-center border border-yellow-500 z-10"
-                              title="Featured Project"
-                            >
-                              <FiStar className="w-3.5 h-3.5 fill-zinc-950 text-zinc-950" />
-                            </div>
-                          )}
-                        </div>
+                  return (
+                    <div
+                      key={project.id}
+                      onClick={() => handleCardClick(project, index)}
+                      className={cardClass}
+                      style={{
+                        width: `${cardWidth}px`,
+                        transform: transformStyle,
+                      }}
+                    >
+                      <div className="relative w-full aspect-video overflow-hidden rounded-none bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800">
+                        {project.coverImage && (
+                          <Image
+                            src={project.coverImage}
+                            alt={project.title}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            className="object-cover"
+                          />
+                        )}
 
-                        {/* Title → Role → Description → Tags */}
-                        <div className="space-y-1.5 text-left">
-                          <h3 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200 group-hover:text-zinc-650 dark:group-hover:text-zinc-300 transition-colors">
-                            {project.title}
-                          </h3>
-
-                          {project.role && (
-                            <p className="text-[10px] uppercase font-bold tracking-wider text-zinc-400 dark:text-zinc-500">
-                              {project.role}
-                            </p>
-                          )}
-
-                          <p className="text-xs text-zinc-650 dark:text-zinc-400 leading-relaxed font-normal line-clamp-2">
-                            {project.description}
-                          </p>
-
-                          <div className="flex gap-2 pt-0.5 flex-wrap">
-                            {project.tags.slice(0, 3).map((tag) => (
-                              <span
-                                key={tag}
-                                className="text-[10px] px-2.5 py-0.5 bg-zinc-100 dark:bg-zinc-900 text-zinc-650 dark:text-zinc-400 font-bold rounded-none border border-zinc-200/50 dark:border-zinc-800"
-                              >
-                                {tag}
-                              </span>
-                            ))}
+                        {/* Yellow Star Overlay for Featured projects */}
+                        {project.featured && (
+                          <div 
+                            className="absolute top-2 right-2 bg-yellow-400 text-zinc-950 p-1 shadow-sm flex items-center justify-center border border-yellow-500 z-10"
+                            title="Featured Project"
+                          >
+                            <FiStar className="w-3.5 h-3.5 fill-zinc-950 text-zinc-950" />
                           </div>
+                        )}
+                      </div>
+
+                      {/* Title → Role → Description → Tags */}
+                      <div className="space-y-1.5 text-left">
+                        <h3 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200 group-hover:text-zinc-650 dark:group-hover:text-zinc-300 transition-colors">
+                          {project.title}
+                        </h3>
+
+                        {project.role && (
+                          <p className="text-[10px] uppercase font-bold tracking-wider text-zinc-400 dark:text-zinc-500">
+                            {project.role}
+                          </p>
+                        )}
+
+                        <p className="text-xs text-zinc-650 dark:text-zinc-400 leading-relaxed font-normal line-clamp-2">
+                          {project.description}
+                        </p>
+
+                        <div className="flex gap-2 pt-0.5 flex-wrap">
+                          {project.tags.slice(0, 3).map((tag) => (
+                            <span
+                              key={tag}
+                              className="text-[10px] px-2.5 py-0.5 bg-zinc-100 dark:bg-zinc-900 text-zinc-650 dark:text-zinc-400 font-bold rounded-none border border-zinc-200/50 dark:border-zinc-800"
+                            >
+                              {tag}
+                            </span>
+                          ))}
                         </div>
                       </div>
-                    );
-                  })}
-                </div>
+                    </div>
+                  );
+                })}
               </div>
 
               {/* Navigation Buttons */}
