@@ -7,9 +7,8 @@ import {
   createProject,
   updateProject,
   deleteProject,
-  uploadProjectCover,
-  uploadProjectFile,
 } from "@/lib/actions/portfolio.actions";
+import { supabase } from "@/lib/supabase";
 
 interface ProjectFormProps {
   project?: {
@@ -138,6 +137,31 @@ export default function ProjectForm({ project }: ProjectFormProps) {
     }
   }
 
+  async function clientUploadProjectFile(
+    file: File,
+    folder: string
+  ): Promise<string | null> {
+    try {
+      const timestamp = Date.now();
+      const fileName = `${folder}/${timestamp}-${file.name}`;
+
+      const { error } = await supabase.storage
+        .from("portfolio")
+        .upload(fileName, file);
+
+      if (error) throw error;
+
+      const { data } = supabase.storage
+        .from("portfolio")
+        .getPublicUrl(fileName);
+
+      return data.publicUrl;
+    } catch (error) {
+      console.error(`Client upload to ${folder} failed:`, error);
+      return null;
+    }
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setLoading(true);
@@ -147,7 +171,7 @@ export default function ProjectForm({ project }: ProjectFormProps) {
 
       // 1. Upload Cover Image if updated
       if (coverImageFile) {
-        const url = await uploadProjectCover(coverImageFile);
+        const url = await clientUploadProjectFile(coverImageFile, "project-covers");
         if (!url) throw new Error("Failed to upload cover image");
         finalCoverUrl = url;
       }
@@ -156,7 +180,7 @@ export default function ProjectForm({ project }: ProjectFormProps) {
       const finalImages: string[] = [];
       for (const item of galleryItems) {
         if (item.file) {
-          const url = await uploadProjectFile(item.file, "project-images");
+          const url = await clientUploadProjectFile(item.file, "project-images");
           if (!url) throw new Error(`Failed to upload image: ${item.file.name}`);
           finalImages.push(url);
         } else {
@@ -167,7 +191,7 @@ export default function ProjectForm({ project }: ProjectFormProps) {
       // 3. Upload New Videos
       const uploadedVideos: string[] = [];
       for (const file of newVideoFiles) {
-        const url = await uploadProjectFile(file, "project-videos");
+        const url = await clientUploadProjectFile(file, "project-videos");
         if (!url) throw new Error(`Failed to upload video: ${file.name}`);
         uploadedVideos.push(url);
       }
