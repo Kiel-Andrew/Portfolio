@@ -155,12 +155,12 @@ export default function ProjectsSection() {
             </div>
           ) : (
             <div 
-              className="relative w-full flex items-center justify-center min-h-[360px] xs:min-h-[380px] sm:min-h-[440px] md:min-h-[480px]"
+              className="relative w-full flex items-center justify-center"
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
             >
               {/* Carousel Viewport */}
-              <div className="relative w-full overflow-hidden h-[340px] xs:h-[360px] sm:h-[440px] md:h-[480px] lg:h-[500px] py-4">
+              <div className="relative w-full overflow-hidden h-[300px] sm:h-[360px] md:h-[400px] py-2">
                 {projects.map((project, index) => {
                   const isActive = index === activeIndex;
                   const isLeft =
@@ -275,7 +275,7 @@ export default function ProjectsSection() {
 
           {/* View All Projects Button */}
           {projects.length > 0 && (
-            <div className="flex justify-center mt-12">
+            <div className="flex justify-center mt-6">
               <Link
                 href="/projects"
                 className="inline-flex items-center justify-center px-6 py-2.5 border border-zinc-800 dark:border-zinc-200 hover:bg-zinc-950 dark:hover:bg-zinc-100 hover:text-white dark:hover:text-zinc-950 transition-colors duration-300 text-xs font-bold uppercase tracking-wider rounded-none"

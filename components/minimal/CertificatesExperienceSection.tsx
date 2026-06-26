@@ -182,13 +182,16 @@ export default function CertificatesExperienceSection() {
               )}
             </div>
             
-            <div className="space-y-3 divide-y divide-zinc-100 dark:divide-zinc-900">
+            <div className="space-y-1">
               {experiences.length === 0 ? (
                 <p className="text-xs text-zinc-400">No experience added yet.</p>
               ) : (
-                displayedExperiences.map((exp, index) => (
-                  <div key={exp.id} className={`${index > 0 ? "pt-3" : ""} space-y-1`}>
-                    <h3 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200">
+                displayedExperiences.map((exp) => (
+                  <div 
+                    key={exp.id} 
+                    className="py-1 px-2 -mx-2 transition-all duration-300 hover:translate-x-1.5 hover:bg-zinc-50 dark:hover:bg-zinc-900/30 rounded-none group/exp space-y-0.5"
+                  >
+                    <h3 className="text-xs font-bold text-zinc-800 dark:text-zinc-200 group-hover/exp:text-zinc-950 dark:group-hover/exp:text-white transition-colors">
                       {exp.title}
                     </h3>
                     <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
@@ -229,10 +232,13 @@ export default function CertificatesExperienceSection() {
             </div>
 
             {/* Scrollable Content */}
-            <div className="p-6 overflow-y-auto space-y-3 divide-y divide-zinc-100 dark:divide-zinc-900">
-              {sortedExperiences.map((exp, index) => (
-                <div key={exp.id} className={`${index > 0 ? "pt-3" : ""} space-y-1`}>
-                  <h3 className="text-xs sm:text-sm font-bold text-zinc-800 dark:text-zinc-200">
+            <div className="p-6 overflow-y-auto space-y-1">
+              {sortedExperiences.map((exp) => (
+                <div 
+                  key={exp.id} 
+                  className="py-1 px-2 -mx-2 transition-all duration-300 hover:translate-x-1.5 hover:bg-zinc-50 dark:hover:bg-zinc-900/30 rounded-none group/exp space-y-0.5"
+                >
+                  <h3 className="text-xs font-bold text-zinc-800 dark:text-zinc-200 group-hover/exp:text-zinc-950 dark:group-hover/exp:text-white transition-colors">
                     {exp.title}
                   </h3>
                   <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">

@@ -54,7 +54,7 @@ export default function FooterSection() {
             <h3 className="text-xs font-bold uppercase tracking-wider text-zinc-400 dark:text-zinc-500">
               Get In Touch
             </h3>
-            <p className="text-xs sm:text-sm text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
+            <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed font-normal">
               Interested in working together? Let&apos;s connect and discuss your next project.
             </p>
             <button
