@@ -300,7 +300,7 @@ export default function ProjectForm({ project }: ProjectFormProps) {
           className="block w-full text-xs text-zinc-400 file:mr-4 file:py-1.5 file:px-3 file:border file:border-zinc-800 file:bg-zinc-900 file:hover:bg-zinc-800 file:text-zinc-300 file:rounded-none file:font-bold file:uppercase file:tracking-wider file:cursor-pointer disabled:opacity-50"
         />
         <p className="text-[10px] text-zinc-500 italic font-medium">
-          Recommended: 16:9 aspect ratio (e.g. 1920x1080px, max 5MB)
+          Recommended: Landscape (e.g. 16:9, 1920x1080px) or Portrait (e.g. 3:4, 1080x1350px) aspect ratio, max 5MB
         </p>
       </div>
 
@@ -320,7 +320,7 @@ export default function ProjectForm({ project }: ProjectFormProps) {
                 onDragStart={() => handleDragStart(index)}
                 onDragOver={(e) => handleDragOver(e, index)}
                 onDragEnd={handleDragEnd}
-                className={`relative aspect-[3/4] border border-zinc-800 group overflow-hidden cursor-grab active:cursor-grabbing transition-all ${
+                className={`relative aspect-square border border-zinc-800 group overflow-hidden cursor-grab active:cursor-grabbing transition-all ${
                   draggedIndex === index ? "opacity-40 scale-95 border-dashed border-zinc-500" : "opacity-100"
                 }`}
                 title="Drag to change sequence"
@@ -355,7 +355,7 @@ export default function ProjectForm({ project }: ProjectFormProps) {
           className="block w-full text-xs text-zinc-400 file:mr-4 file:py-1.5 file:px-3 file:border file:border-zinc-800 file:bg-zinc-900 file:hover:bg-zinc-800 file:text-zinc-300 file:rounded-none file:font-bold file:uppercase file:tracking-wider file:cursor-pointer disabled:opacity-50"
         />
         <p className="text-[10px] text-zinc-500 italic font-medium">
-          Recommended: Portrait aspect ratio (e.g. 3:4 or 4:5, e.g. 1080x1350px) for best preview in user gallery
+          Recommended: Portrait (e.g. 3:4/4:5, 1080x1350px) or Landscape (e.g. 16:9, 1920x1080px) aspect ratio
         </p>
       </div>
 

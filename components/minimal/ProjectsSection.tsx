@@ -362,7 +362,7 @@ export default function ProjectsSection() {
                         <div
                           key={i}
                           onClick={() => setLightboxIndex(i)}
-                          className="shrink-0 w-32 xs:w-36 sm:w-44 aspect-[3/4] overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900/50 cursor-pointer snap-start transition-opacity hover:opacity-90"
+                          className="shrink-0 w-32 xs:w-36 sm:w-44 aspect-square overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900/50 cursor-pointer snap-start transition-opacity hover:opacity-90"
                         >
                           <img
                             src={imgUrl}
