@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { FiExternalLink, FiGithub, FiX, FiChevronLeft, FiChevronRight, FiStar } from "react-icons/fi";
 import Image from "next/image";
 import Link from "next/link";
@@ -26,6 +26,40 @@ export default function ProjectsSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const [cardWidth, setCardWidth] = useState(300);
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const galleryRef = useRef<HTMLDivElement>(null);
+
+  const scrollGallery = (direction: "left" | "right") => {
+    if (galleryRef.current) {
+      const scrollAmount = 300;
+      galleryRef.current.scrollBy({
+        left: direction === "left" ? -scrollAmount : scrollAmount,
+        behavior: "smooth",
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (lightboxIndex === null || !selectedProject || !selectedProject.images) return;
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        setLightboxIndex((prev) => 
+          prev !== null ? (prev - 1 + selectedProject.images!.length) % selectedProject.images!.length : null
+        );
+      } else if (e.key === "ArrowRight") {
+        setLightboxIndex((prev) => 
+          prev !== null ? (prev + 1) % selectedProject.images!.length : null
+        );
+      } else if (e.key === "Escape") {
+        setLightboxIndex(null);
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [lightboxIndex, selectedProject]);
 
   useEffect(() => {
     fetch("/api/projects")
@@ -162,7 +196,7 @@ export default function ProjectsSection() {
                               alt={project.title}
                               fill
                               sizes="(max-width: 768px) 100vw, 50vw"
-                              className="object-cover transition-transform duration-350 ease-out group-hover:scale-[1.03]"
+                              className="object-cover"
                             />
                           )}
 
@@ -249,14 +283,14 @@ export default function ProjectsSection() {
       {/* Project Modal - fully monochrome */}
       {selectedProject && (
         <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-zinc-900 rounded-none max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-zinc-200 dark:border-zinc-800">
+          <div className="bg-white dark:bg-zinc-900 rounded-none max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-zinc-200 dark:border-zinc-800">
             <div className="sticky top-0 z-10 flex items-center justify-between p-5 border-b border-zinc-100 dark:border-zinc-800 bg-white dark:bg-zinc-900">
               <h2 className="text-sm font-bold text-zinc-900 dark:text-zinc-100 uppercase tracking-wider">
                 {selectedProject.title}
               </h2>
               <button
                 onClick={() => setSelectedProject(null)}
-                className="p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-none transition-colors"
+                className="p-1.5 hover:bg-zinc-100 dark:hover:bg-zinc-800 rounded-none transition-colors cursor-pointer"
               >
                 <FiX className="w-4 h-4 text-zinc-800 dark:text-zinc-200" />
               </button>
@@ -265,7 +299,7 @@ export default function ProjectsSection() {
             <div className="p-6 space-y-5">
               {/* Cover Image */}
               {selectedProject.coverImage && (
-                <div className="relative w-full aspect-video overflow-hidden rounded-none">
+                <div className="relative w-full aspect-video overflow-hidden rounded-none border border-zinc-100 dark:border-zinc-800">
                   <img
                     src={selectedProject.coverImage}
                     alt={selectedProject.title}
@@ -313,22 +347,53 @@ export default function ProjectsSection() {
                 </div>
               </div>
 
-              {/* Gallery Images */}
+              {/* Gallery Images Slider */}
               {selectedProject.images && selectedProject.images.length > 0 && (
-                <div className="space-y-2">
+                <div className="space-y-3 pt-2">
                   <h3 className="text-xs font-bold text-zinc-800 dark:text-zinc-200 uppercase tracking-wider">
                     Gallery
                   </h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {selectedProject.images.map((imgUrl, i) => (
-                      <div key={i} className="relative aspect-video w-full overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900">
-                        <img
-                          src={imgUrl}
-                          alt={`${selectedProject.title} gallery image ${i + 1}`}
-                          className="object-cover w-full h-full"
-                        />
-                      </div>
-                    ))}
+                  <div className="relative w-full group/gallery">
+                    <div
+                      ref={galleryRef}
+                      className="flex gap-4 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden py-1.5 px-1 scroll-smooth snap-x"
+                    >
+                      {selectedProject.images.map((imgUrl, i) => (
+                        <div
+                          key={i}
+                          onClick={() => setLightboxIndex(i)}
+                          className="shrink-0 w-32 xs:w-36 sm:w-44 aspect-[3/4] overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-zinc-100 dark:bg-zinc-900/50 cursor-pointer snap-start transition-opacity hover:opacity-90"
+                        >
+                          <img
+                            src={imgUrl}
+                            alt={`${selectedProject.title} gallery image ${i + 1}`}
+                            className="object-cover w-full h-full"
+                          />
+                        </div>
+                      ))}
+                    </div>
+                    
+                    {/* Gallery Nav Buttons */}
+                    {selectedProject.images.length > 1 && (
+                      <>
+                        <button
+                          type="button"
+                          onClick={() => scrollGallery("left")}
+                          className="absolute left-1 top-1/2 -translate-y-1/2 z-10 p-2 bg-white/95 dark:bg-zinc-950/95 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-950 dark:hover:bg-zinc-100 hover:text-white dark:hover:text-zinc-950 transition-colors duration-300 shadow-md cursor-pointer opacity-0 group-hover/gallery:opacity-100 transition-opacity"
+                          aria-label="Scroll left"
+                        >
+                          <FiChevronLeft className="w-4 h-4" />
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => scrollGallery("right")}
+                          className="absolute right-1 top-1/2 -translate-y-1/2 z-10 p-2 bg-white/95 dark:bg-zinc-950/95 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 hover:bg-zinc-950 dark:hover:bg-zinc-100 hover:text-white dark:hover:text-zinc-950 transition-colors duration-300 shadow-md cursor-pointer opacity-0 group-hover/gallery:opacity-100 transition-opacity"
+                          aria-label="Scroll right"
+                        >
+                          <FiChevronRight className="w-4 h-4" />
+                        </button>
+                      </>
+                    )}
                   </div>
                 </div>
               )}
@@ -378,6 +443,70 @@ export default function ProjectsSection() {
                   </a>
                 )}
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Lightbox Modal */}
+      {lightboxIndex !== null && selectedProject && selectedProject.images && (
+        <div className="fixed inset-0 z-[100] bg-black/95 flex flex-col justify-between p-6 select-none animate-in fade-in duration-200">
+          {/* Top Bar */}
+          <div className="flex items-center justify-between w-full">
+            <div className="bg-zinc-900/80 border border-zinc-800 px-3 py-1.5 text-xs text-zinc-200 font-bold uppercase tracking-wider">
+              {lightboxIndex + 1} / {selectedProject.images.length}
+            </div>
+            <button
+              onClick={() => setLightboxIndex(null)}
+              className="p-2 bg-zinc-900/80 border border-zinc-800 hover:bg-zinc-800 text-zinc-400 hover:text-white transition-colors cursor-pointer"
+              aria-label="Close lightbox"
+            >
+              <FiX className="w-5 h-5" />
+            </button>
+          </div>
+
+          {/* Center Image with Nav Buttons */}
+          <div className="flex-1 flex items-center justify-between w-full gap-4 relative py-4">
+            {/* Left navigation */}
+            {selectedProject.images.length > 1 && (
+              <button
+                onClick={() => setLightboxIndex((prev) => 
+                  prev !== null ? (prev - 1 + selectedProject.images!.length) % selectedProject.images!.length : null
+                )}
+                className="p-3 sm:p-4 bg-zinc-900/80 border border-zinc-800 hover:bg-zinc-800 text-white transition-colors cursor-pointer"
+                aria-label="Previous image"
+              >
+                <FiChevronLeft className="w-5 h-5" />
+              </button>
+            )}
+
+            {/* Centered Image */}
+            <div className="flex-1 flex items-center justify-center h-full max-h-[75vh]">
+              <img
+                src={selectedProject.images[lightboxIndex]}
+                alt={`${selectedProject.title} lightbox image ${lightboxIndex + 1}`}
+                className="max-w-full max-h-[75vh] object-contain border border-zinc-900 shadow-2xl"
+              />
+            </div>
+
+            {/* Right navigation */}
+            {selectedProject.images.length > 1 && (
+              <button
+                onClick={() => setLightboxIndex((prev) => 
+                  prev !== null ? (prev + 1) % selectedProject.images!.length : null
+                )}
+                className="p-3 sm:p-4 bg-zinc-900/80 border border-zinc-800 hover:bg-zinc-800 text-white transition-colors cursor-pointer"
+                aria-label="Next image"
+              >
+                <FiChevronRight className="w-5 h-5" />
+              </button>
+            )}
+          </div>
+
+          {/* Bottom guidelines */}
+          <div className="flex justify-center w-full">
+            <div className="text-zinc-550 dark:text-zinc-500 text-[10px] sm:text-xs font-bold uppercase tracking-wider bg-zinc-900/40 border border-zinc-900/30 py-1.5 px-4">
+              Use arrow keys to navigate • ESC to close
             </div>
           </div>
         </div>

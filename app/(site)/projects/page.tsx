@@ -58,7 +58,7 @@ export default async function ProjectsPage() {
                       alt={project.title}
                       fill
                       sizes="(max-width: 768px) 100vw, 50vw"
-                      className="object-cover transition-transform duration-350 ease-out group-hover:scale-[1.02]"
+                      className="object-cover"
                     />
 
                     {/* Featured Yellow Star Overlay */}

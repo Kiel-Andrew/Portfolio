@@ -27,6 +27,12 @@ interface ProjectFormProps {
   };
 }
 
+interface GalleryItem {
+  id: string;
+  url: string;
+  file?: File;
+}
+
 export default function ProjectForm({ project }: ProjectFormProps) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -44,13 +50,17 @@ export default function ProjectForm({ project }: ProjectFormProps) {
   const [coverImageFile, setCoverImageFile] = useState<File | null>(null);
   const [coverPreview, setCoverPreview] = useState<string>(project?.coverImage || "");
 
-  // Gallery Images
-  const [existingImages, setExistingImages] = useState<string[]>(project?.images || []);
-  const [newImageFiles, setNewImageFiles] = useState<File[]>([]);
+  // Gallery Items (Combined URLs and new files)
+  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>(
+    project?.images.map((url) => ({ id: url, url })) || []
+  );
 
   // Gallery Videos
   const [existingVideos, setExistingVideos] = useState<string[]>(project?.videos || []);
   const [newVideoFiles, setNewVideoFiles] = useState<File[]>([]);
+
+  // Drag and drop sorting state
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
 
   // File handlers
   const handleCoverChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -63,7 +73,12 @@ export default function ProjectForm({ project }: ProjectFormProps) {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setNewImageFiles((prev) => [...prev, ...Array.from(e.target.files!)]);
+      const newItems = Array.from(e.target.files).map((file) => ({
+        id: Math.random().toString(36).substring(2, 9),
+        url: URL.createObjectURL(file),
+        file,
+      }));
+      setGalleryItems((prev) => [...prev, ...newItems]);
     }
   };
 
@@ -73,12 +88,8 @@ export default function ProjectForm({ project }: ProjectFormProps) {
     }
   };
 
-  const removeExistingImage = (url: string) => {
-    setExistingImages((prev) => prev.filter((img) => img !== url));
-  };
-
-  const removeNewImage = (index: number) => {
-    setNewImageFiles((prev) => prev.filter((_, i) => i !== index));
+  const removeGalleryItem = (id: string) => {
+    setGalleryItems((prev) => prev.filter((item) => item.id !== id));
   };
 
   const removeExistingVideo = (url: string) => {
@@ -87,6 +98,28 @@ export default function ProjectForm({ project }: ProjectFormProps) {
 
   const removeNewVideo = (index: number) => {
     setNewVideoFiles((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  // Drag and Drop handlers
+  const handleDragStart = (index: number) => {
+    setDraggedIndex(index);
+  };
+
+  const handleDragOver = (e: React.DragEvent, index: number) => {
+    e.preventDefault();
+    if (draggedIndex === null || draggedIndex === index) return;
+
+    const newItems = [...galleryItems];
+    const draggedItem = newItems[draggedIndex];
+    newItems.splice(draggedIndex, 1);
+    newItems.splice(index, 0, draggedItem);
+
+    setDraggedIndex(index);
+    setGalleryItems(newItems);
+  };
+
+  const handleDragEnd = () => {
+    setDraggedIndex(null);
   };
 
   async function handleDelete() {
@@ -119,12 +152,16 @@ export default function ProjectForm({ project }: ProjectFormProps) {
         finalCoverUrl = url;
       }
 
-      // 2. Upload New Gallery Images
-      const uploadedImages: string[] = [];
-      for (const file of newImageFiles) {
-        const url = await uploadProjectFile(file, "project-images");
-        if (!url) throw new Error(`Failed to upload image: ${file.name}`);
-        uploadedImages.push(url);
+      // 2. Upload New Gallery Images and keep their specific sequence
+      const finalImages: string[] = [];
+      for (const item of galleryItems) {
+        if (item.file) {
+          const url = await uploadProjectFile(item.file, "project-images");
+          if (!url) throw new Error(`Failed to upload image: ${item.file.name}`);
+          finalImages.push(url);
+        } else {
+          finalImages.push(item.url);
+        }
       }
 
       // 3. Upload New Videos
@@ -140,7 +177,6 @@ export default function ProjectForm({ project }: ProjectFormProps) {
         .map((t) => t.trim())
         .filter(Boolean);
 
-      const finalImages = [...existingImages, ...uploadedImages];
       const finalVideos = [...existingVideos, ...uploadedVideos];
 
       if (project) {
@@ -263,6 +299,9 @@ export default function ProjectForm({ project }: ProjectFormProps) {
           disabled={loading}
           className="block w-full text-xs text-zinc-400 file:mr-4 file:py-1.5 file:px-3 file:border file:border-zinc-800 file:bg-zinc-900 file:hover:bg-zinc-800 file:text-zinc-300 file:rounded-none file:font-bold file:uppercase file:tracking-wider file:cursor-pointer disabled:opacity-50"
         />
+        <p className="text-[10px] text-zinc-500 italic font-medium">
+          Recommended: 16:9 aspect ratio (e.g. 1920x1080px, max 5MB)
+        </p>
       </div>
 
       {/* Gallery Images Upload */}
@@ -272,33 +311,36 @@ export default function ProjectForm({ project }: ProjectFormProps) {
         </label>
         
         {/* Previews */}
-        {(existingImages.length > 0 || newImageFiles.length > 0) && (
+        {galleryItems.length > 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-2">
-            {/* Existing Images */}
-            {existingImages.map((url, i) => (
-              <div key={`existing-${i}`} className="relative aspect-video border border-zinc-800 group overflow-hidden">
-                <img src={url} alt="Gallery existing" className="object-cover w-full h-full" />
+            {galleryItems.map((item, index) => (
+              <div
+                key={item.id}
+                draggable
+                onDragStart={() => handleDragStart(index)}
+                onDragOver={(e) => handleDragOver(e, index)}
+                onDragEnd={handleDragEnd}
+                className={`relative aspect-[3/4] border border-zinc-800 group overflow-hidden cursor-grab active:cursor-grabbing transition-all ${
+                  draggedIndex === index ? "opacity-40 scale-95 border-dashed border-zinc-500" : "opacity-100"
+                }`}
+                title="Drag to change sequence"
+              >
+                <img
+                  src={item.url}
+                  alt={`Gallery preview ${index + 1}`}
+                  className="object-cover w-full h-full pointer-events-none"
+                />
                 <button
                   type="button"
-                  onClick={() => removeExistingImage(url)}
-                  className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                  onClick={() => removeGalleryItem(item.id)}
+                  className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
                 >
                   <Trash2 className="w-4 h-4 text-red-400" />
                 </button>
-              </div>
-            ))}
-            
-            {/* New Images */}
-            {newImageFiles.map((file, i) => (
-              <div key={`new-${i}`} className="relative aspect-video border border-zinc-800 group overflow-hidden">
-                <img src={URL.createObjectURL(file)} alt="Gallery new" className="object-cover w-full h-full" />
-                <button
-                  type="button"
-                  onClick={() => removeNewImage(i)}
-                  className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
-                >
-                  <X className="w-4 h-4 text-zinc-300" />
-                </button>
+                {/* Drag sort badge */}
+                <div className="absolute bottom-1 left-1 bg-black/60 px-1 py-0.5 text-[8px] text-zinc-400 uppercase font-bold tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
+                  Drag to sort
+                </div>
               </div>
             ))}
           </div>
@@ -312,6 +354,9 @@ export default function ProjectForm({ project }: ProjectFormProps) {
           disabled={loading}
           className="block w-full text-xs text-zinc-400 file:mr-4 file:py-1.5 file:px-3 file:border file:border-zinc-800 file:bg-zinc-900 file:hover:bg-zinc-800 file:text-zinc-300 file:rounded-none file:font-bold file:uppercase file:tracking-wider file:cursor-pointer disabled:opacity-50"
         />
+        <p className="text-[10px] text-zinc-500 italic font-medium">
+          Recommended: Portrait aspect ratio (e.g. 3:4 or 4:5, e.g. 1080x1350px) for best preview in user gallery
+        </p>
       </div>
 
       {/* Gallery Videos Upload */}
@@ -333,7 +378,7 @@ export default function ProjectForm({ project }: ProjectFormProps) {
                 <button
                   type="button"
                   onClick={() => removeExistingVideo(url)}
-                  className="text-red-400 hover:text-red-300 p-1 font-bold"
+                  className="text-red-400 hover:text-red-350 p-1 font-bold"
                 >
                   Remove
                 </button>
@@ -367,6 +412,9 @@ export default function ProjectForm({ project }: ProjectFormProps) {
           disabled={loading}
           className="block w-full text-xs text-zinc-400 file:mr-4 file:py-1.5 file:px-3 file:border file:border-zinc-800 file:bg-zinc-900 file:hover:bg-zinc-800 file:text-zinc-300 file:rounded-none file:font-bold file:uppercase file:tracking-wider file:cursor-pointer disabled:opacity-50"
         />
+        <p className="text-[10px] text-zinc-500 italic font-medium">
+          Recommended: MP4, WebM format (max 50MB)
+        </p>
       </div>
 
       {/* URLs */}
